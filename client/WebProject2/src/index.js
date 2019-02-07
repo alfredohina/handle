@@ -6,6 +6,7 @@ import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./lib/Redux/store";
+import 'bulma/css/bulma.css';
 
 ReactDOM.render(
   <Provider store={store}>

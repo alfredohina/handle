@@ -19,10 +19,12 @@ export class _Signup extends Component {
   handleSubmit(){
     const {username, password, type} = this.state;
     console.log(username, password, type)
-    const {dispatch} = this.props;
+    const {dispatch, history} = this.props;
     AuthAPI.signup(username, password, type)
     .then(user =>{
-      dispatch(login(user))})
+      dispatch(login(user))
+      history.push("/")
+    })
     .catch(e => console.log('catch de handlesubmit'+ e))
   }
 
