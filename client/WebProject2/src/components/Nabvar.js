@@ -8,11 +8,11 @@ const _NavBar = ({ user, dispatch }) => {
 
     return (
       <div className="Nav">
-        <nav className="navbar is-warning" role="navigation" aria-label="main navigation">
+        <nav className="navbar" style={{paddingTop:"10px", paddingLeft:"50px"}} role="navigation" aria-label="main navigation">
           <div className="navbar-brand">
-            <a className="navbar-item" href="/">
-              <img src="./images/logo.png" alt="logo" width="112" height="28" />
-            </a>
+            <Link to="/" className="navbar-item">
+              <img src="./images/logo.png" alt="logo" width="162" height="45" />
+            </Link>
 
             <a role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
               <span aria-hidden="true"></span>
@@ -22,6 +22,7 @@ const _NavBar = ({ user, dispatch }) => {
           </div>
 
           <div id="navbarBasicExample" className="navbar-menu">
+          {user ? ( 
             <div className="navbar-start">
               <Link to="/" className="navbar-item">
                 Home
@@ -45,10 +46,13 @@ const _NavBar = ({ user, dispatch }) => {
                   <a className="navbar-item">
                     Report an issue
           </a>
+              
                 </div>
               </div>
             </div>
-
+              ) : 
+              <div></div>
+              }
             <div className="navbar-end">
               <div className="navbar-item">
                 <div className="buttons">
@@ -62,8 +66,8 @@ const _NavBar = ({ user, dispatch }) => {
                     </Link>
 
 
-                  ) : <div><Link to="/signup" className="button is-primary">Sign up</Link>
-                      <Link to="/login" className="button is-light">Login</Link></div>}
+                  ) : <div><Link to="/signup" style={{backgroundColor: "#df6769"}} className="button is-primary is-rounded">Sign up</Link>
+                      </div>}
 
                 </div>
               </div>
