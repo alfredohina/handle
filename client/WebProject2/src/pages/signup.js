@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Input from './Input';
+import Input from '../components/Input';
 import { AuthAPI } from "../lib/auth";
 import { connect } from 'react-redux';
 import {  login  } from '../lib/Redux/actions';

@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import './App.css';
-import { Principal } from './components/principal';
-import NavBar from './components/Nabvar';
-import { Login } from './components/login';
-import { Signup } from './components/signup';
-import Home from './components/Home';
+import {NavBar} from './components/Nabvar';
+import { Login } from './pages/login';
+import { Signup } from './pages/signup';
+import { Home } from './pages/Home';
+import AddCont from './pages/AddCont';
+import ShowCont from './pages/ShowCont';
+
 
 
 
@@ -14,10 +16,13 @@ class App extends Component {
     return (
       <div>
         <NavBar/>
-        {/* <Principal/> */}
-        <Route exact path="/" component={Home} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/signup" component={Signup} />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/signup" component={Signup} />
+          <Route exact path="/addcont" component={AddCont} />
+          <Route exact path="/showcont" component={ShowCont} />
+        </Switch>
       </div>
     );
   }

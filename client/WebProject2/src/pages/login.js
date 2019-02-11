@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Input from './Input';
+import Input from '../components/Input';
 import {  login  } from '../lib/Redux/actions';
 import { AuthAPI } from "../lib/auth";
 import { connect } from 'react-redux';
@@ -27,10 +27,10 @@ handleLogin(){
   
   render() {
     return (
-      <div>
+      <div style={{width:"30%", display:"block", margin:"auto", textAlign:"center", marginTop:"30px"}}>
         <Input text="Nombre" onChange={e => this.setState({password:e.target.value})} />
         <Input text="Password" onChange={e => this.setState({username:e.target.value})}/>
-        <button onClick={() => this.handleLogin()}>Login</button>
+        <button className="button is-warning" style={{marginTop:"20px"}} onClick={() => this.handleLogin()}>Login</button>
       </div>
     );
   }

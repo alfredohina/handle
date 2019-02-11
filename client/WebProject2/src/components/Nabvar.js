@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { AuthAPI } from "../lib/auth";
 
 
-class NavBar extends Component {
-
-  render() {
+const _NavBar = ({ user, dispatch }) => {
 
     return (
       <div className="Nav">
@@ -23,29 +23,24 @@ class NavBar extends Component {
 
           <div id="navbarBasicExample" className="navbar-menu">
             <div className="navbar-start">
-              <a className="navbar-item">
+              <Link to="/" className="navbar-item">
                 Home
-      </a>
+              </Link>
 
               <a className="navbar-item">
-                Map
+              {user ? ('User') : ('No User')}
       </a>
-
               <div className="navbar-item has-dropdown is-hoverable">
                 <a className="navbar-link">
                   Containers
         </a>
 
                 <div className="navbar-dropdown">
-                <a className="navbar-item">
-                    Show all
-          </a>
-                  <a className="navbar-item">
-                    Add New
-          </a>
-                  <a className="navbar-item">
-                    Delete container
-          </a>
+          
+          <Link to="/showcont" className="navbar-item">Show All</Link>
+          <Link to="/addcont" className="navbar-item">Add New</Link>
+
+
                   <hr className="navbar-divider" />
                   <a className="navbar-item">
                     Report an issue
@@ -57,8 +52,19 @@ class NavBar extends Component {
             <div className="navbar-end">
               <div className="navbar-item">
                 <div className="buttons">
-                  <Link to="/signup" className="button is-primary">Sign up</Link>
-                  <Link to="/login" className="button is-light">Login</Link>
+                  {user ? (
+                    <Link
+                      to="/"
+                      className="button is-danger"
+                      onClick={() =>
+                        AuthAPI.logout().then(e => dispatch({ type: "LOGOUT" }))
+                      }> Logout <i className="fa fa-home" />
+                    </Link>
+
+
+                  ) : <div><Link to="/signup" className="button is-primary">Sign up</Link>
+                      <Link to="/login" className="button is-light">Login</Link></div>}
+
                 </div>
               </div>
             </div>
@@ -66,8 +72,6 @@ class NavBar extends Component {
         </nav>
       </div>
     );
-
   }
-}
 
-export default NavBar;
+export const NavBar = connect(store => ({ user: store.user }))(_NavBar);

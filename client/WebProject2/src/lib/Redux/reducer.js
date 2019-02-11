@@ -1,5 +1,3 @@
-import { AuthAPI } from "../auth";
-
 const initialStore = {
     user: null,
     image: "",
