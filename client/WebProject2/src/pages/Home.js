@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { NavBar } from "../components/Nabvar";
 
 library.add(faArrowRight)
 
@@ -28,7 +29,7 @@ handleLogin(){
     AuthAPI.login(username, password)
     .then( user =>{
       dispatch(login(user))
-      history.push("/addcont")
+      history.push("/navigation")
     })
     .catch( e =>  e);
 }
@@ -36,6 +37,7 @@ handleLogin(){
   render() {
     return (
       <React.Fragment>
+        <NavBar/>
         <div style={{height:"700px", backgroundImage: 'url(' + "./images/backHome.jpg" + ')', backgroundRepeat:"no-repeat" }}>
           <div style={{paddingTop:"100px", paddingLeft:"50px", width:"500px"}}>
           

@@ -181,9 +181,8 @@ export class AddCont extends Component {
                     
                 </form>
 
-
-
-                <Map
+<div style={{marginLeft:"405px"}}>
+                <Map 
                     google={this.props.google}
                     style={{
                         width: "500px",
@@ -196,6 +195,7 @@ export class AddCont extends Component {
                 >
                     <Marker position={this.state.marker.location} />
                 </Map>
+                </div>
             </div>
         )
     }
