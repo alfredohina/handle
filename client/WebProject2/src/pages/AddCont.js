@@ -7,6 +7,10 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons'
 library.add(faTrash)
 
 
+const LoadingContainer = (props) => (
+    <div>Loading map!</div>
+  )
+
 
 export class AddCont extends Component {
     constructor() {
@@ -20,7 +24,12 @@ export class AddCont extends Component {
             activeMarker: {},
             selectedPlace: {},
             geoposition: {},
-            marker: {}
+            marker: {
+                location: {
+                    lat: "",
+                    lng: ""
+                }
+            }
         };
     }
 
@@ -86,14 +95,20 @@ export class AddCont extends Component {
 
 
     addMarker = (location, map, c) => {
-        console.log(this.state.marker.location)
-        this.setState(prev => ({
+        // console.log(location.lat())
+        this.setState( {
             marker: {
-                ...prev.marker,
-                location
+                location:{
+                lat:location.lat(),
+                lng:location.lng()}
             }
-        }));
+        });
     };
+
+
+    componentDidUpdate(){
+        console.log(this.state.marker.location.lat)
+    }
 
     render() {
         const {name} = this.state;
@@ -102,14 +117,15 @@ export class AddCont extends Component {
 
                 <form onSubmit={this.handleFormSubmit}>
 
-                    <div className="field is-horizontal">
+                    <div className="field is-horizontal" style={{paddingTop: "40px"}}>
                         <div className="field-label is-normal">
                             <label className="label">Location: </label>
                         </div>
                         <div className="field-body">
                             <div className="field">
                                 <p className="control" style={{width: "70%"}}>
-                                <input className="input" type="text" name="name" value={this.state.marker.location} onChange={e => this.setState({name:e.target.value})} />
+                                <input className="input" style={{width: "48%", marginRight:"10px"}} type="text" name="name" value={this.state.marker.location.lat} onChange={e => this.setState({name:e.target.value})} />
+                                <input className="input" style={{width: "48%"}} type="text" name="name" value={this.state.marker.location.lng} onChange={e => this.setState({name:e.target.value})} />
                                 </p>
                             </div>
                         </div>
@@ -191,7 +207,7 @@ export class AddCont extends Component {
                     initialCenter={this.state.geoposition.location}
                     center={this.state.geoposition.location}
                     zoom={14}
-                    onClick={(t, map, c) => this.addMarker(c.latLng, map)}
+                    onClick={(t, map, c) =>{ this.addMarker(c.latLng, map)}}
                 >
                     <Marker position={this.state.marker.location} />
                 </Map>
@@ -203,5 +219,6 @@ export class AddCont extends Component {
 
 
 export default GoogleApiWrapper({
-    apiKey: ("AIzaSyAU3EUjvc0pieMBfL77Qd0dHvQN5QUPSSg")
+    apiKey: ("AIzaSyAU3EUjvc0pieMBfL77Qd0dHvQN5QUPSSg"),
+    LoadingContainer: LoadingContainer
 })(AddCont)
