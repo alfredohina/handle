@@ -30,3 +30,16 @@
     transform: rotate(360deg);
   }
 }
+
+.avatarImg {
+  border-radius: 50%;
+  padding-top: 50px;
+}
+
+.Navigation {
+  float: left;
+  background-color: #4c71ae;
+  color: white;
+  width: 20%;
+  height: 700px;
+}

@@ -14,23 +14,23 @@ const _Navigation = ({ user, dispatch }) => {
   const { username } = user;
   return (
     <React.Fragment>
-      <div style={{ width: "20%", height: "700px", float: "left", backgroundColor: "#4c71ae", color: "white" }}>
+      <div className="Navigation">
         <center>
-          <img src="./images/avatar.png" alt="avatar" style={{ borderRadius: "50%", paddingTop: "50px" }} width="60%" />
+          <img className="avatarImg" src="./images/avatar.png" alt="avatar" width="60%" />
           <p>{user.username}</p>
 
 
-          <aside class="menu" style={{ marginTop: "40px" }}>
-            <p class="menu-label" style={{ color: "#bfbfbf", fontStyle: "bold" }}>
+          <aside className="menu" style={{ marginTop: "40px" }}>
+            <p className="menu-label" style={{ color: "#bfbfbf", fontStyle: "bold" }}>
               Profile
   </p>
-            <ul class="menu-list">
+            <ul className="menu-list">
               <li><a>Edit</a></li>
             </ul>
-            <p class="menu-label" style={{ color: "#bfbfbf", fontStyle: "bold" }}>
+            <p className="menu-label" style={{ color: "#bfbfbf", fontStyle: "bold" }}>
               Services
   </p>
-            <ul class="menu-list">
+            <ul className="menu-list">
               <li><a>Madrid Data Center</a></li>
               <li>
                 <ul>

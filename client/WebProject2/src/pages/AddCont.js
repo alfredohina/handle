@@ -3,6 +3,9 @@ import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { ContsAPI } from "../lib/conts";
+
+
 
 library.add(faTrash)
 
@@ -17,9 +20,11 @@ export class AddCont extends Component {
         super();
         this.state = {
             name: "",
-            tagline: "",
-            description: "",
-            first_brewed: "",
+            lat: "",
+            lng: "",
+            type: "",
+            level: 0,
+            error: "",
             showingInfoWindow: false,
             activeMarker: {},
             selectedPlace: {},
@@ -36,18 +41,15 @@ export class AddCont extends Component {
 
     handleFormSubmit = (event) => {
         event.preventDefault();
-        const name = this.state.name;
-        const tagline = this.state.tagline;
-        const description = this.state.description;
-        const first_brewed = this.state.first_brewed;
-        console.log(this.state.marker.location, tagline)
-    }
+        const { name, lat, lng, type, level } = this.state;
+        console.log(name, lat, lng, type, level)
 
-
-
-    // handleChange = (e) => {
-    //     this.setState({ name: e.target.value1, tagline: e.target.value2, description: e.target.value3, first_brewed: e.target.value4 });
-    // };
+        ContsAPI.addCont(name, lat, lng, type, level)
+            // .then(data => {
+            //     dispatch(login(data))
+            // });
+            // history.push("/");
+        };
 
 
     async componentDidMount() {
@@ -95,20 +97,17 @@ export class AddCont extends Component {
 
 
     addMarker = (location, map, c) => {
-        // console.log(location.lat())
+        console.log(this.state)
         this.setState( {
             marker: {
                 location:{
                 lat:location.lat(),
                 lng:location.lng()}
-            }
+            },
+            lat:location.lat(),
+            lng:location.lng()
         });
     };
-
-
-    componentDidUpdate(){
-        console.log(this.state.marker.location.lat)
-    }
 
     render() {
         const {name} = this.state;
@@ -119,39 +118,27 @@ export class AddCont extends Component {
 
                     <div className="field is-horizontal" style={{paddingTop: "40px"}}>
                         <div className="field-label is-normal">
+                            <label className="label">Name: </label>
+                        </div>
+                        <div className="field-body">
+                            <div className="field">
+                                <p className="control" style={{width: "70%"}}>
+                                <input className="input" type="text" onChange={e => this.setState({name:e.target.value})} />
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div className="field is-horizontal">
+                        <div className="field-label is-normal">
                             <label className="label">Location: </label>
                         </div>
                         <div className="field-body">
                             <div className="field">
                                 <p className="control" style={{width: "70%"}}>
-                                <input className="input" style={{width: "48%", marginRight:"10px"}} type="text" name="name" value={this.state.marker.location.lat} onChange={e => this.setState({name:e.target.value})} />
-                                <input className="input" style={{width: "48%"}} type="text" name="name" value={this.state.marker.location.lng} onChange={e => this.setState({name:e.target.value})} />
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="field is-horizontal">
-                        <div className="field-label is-normal">
-                            <label className="label">Tags: </label>
-                        </div>
-                        <div className="field-body">
-                            <div className="field">
-                                <p className="control" style={{width: "70%"}}>
-                                <input className="input" type="text" name="tagline" value={this.state.tagline} onChange={e => this.setState({tagline:e.target.value})} />
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="field is-horizontal">
-                        <div className="field-label is-normal">
-                            <label className="label">Description: </label>
-                        </div>
-                        <div className="field-body">
-                            <div className="field">
-                                <p className="control" style={{width: "70%"}}>
-                                <input className="input" type="text" name="description" value={this.state.description} onChange={e => this.handleChange(e)} />
+                                <input className="input" style={{width: "48%", marginRight:"4%"}} type="text" name="name" value={this.state.marker.location.lat} />
+                                <input className="input" style={{width: "48%"}} type="text" name="name" value={this.state.marker.location.lng} />
                                 </p>
                             </div>
                         </div>
@@ -162,26 +149,28 @@ export class AddCont extends Component {
                             <label className="label">Type: </label>
                         </div>
                         <div className="field-body">
-                            <div class="control">
-                                <label class="radio" style={{marginRight:"15px"}}>
-                                    <input type="radio" name="type" value="organic"/>
+                            <div className="control">
+                                <label className="radio" style={{marginRight:"15px"}}>
+                                    <input type="radio" name="type" value="organic" onChange={e => this.setState({type:e.target.value})} />
                                     &nbsp; <FontAwesomeIcon icon="trash" style={{color:"#836a4b", fontSize:"1.5em"}} />  Organic
                                 </label>
-                                <label class="radio" style={{marginRight:"15px"}}>
-                                    <input type="radio" name="type" value="plastic" />
+                                <label className="radio" style={{marginRight:"15px"}}>
+                                    <input type="radio" name="type" value="plastic" onChange={e => this.setState({type:e.target.value})} />
                                     &nbsp; <FontAwesomeIcon icon="trash" style={{color:"#e6f04a", fontSize:"1.5em"}} /> Plastic
                                 </label>
-                                <label class="radio" style={{marginRight:"15px"}}>
-                                    <input type="radio" name="type" value="glass" />
+                                <label className="radio" style={{marginRight:"15px"}}>
+                                    <input type="radio" name="type" value="glass" onChange={e => this.setState({type:e.target.value})} />
                                     &nbsp; <FontAwesomeIcon icon="trash" style={{color:"#159a24", fontSize:"1.5em"}} /> Glass
                                 </label>
-                                <label class="radio" style={{marginRight:"15px"}}>
-                                    <input type="radio" name="type" value="paper" />
+                                <label className="radio" style={{marginRight:"15px"}}>
+                                    <input type="radio" name="type" value="paper" onChange={e => this.setState({type:e.target.value})} />
                                     &nbsp; <FontAwesomeIcon icon="trash" style={{color:"#3f84ae", fontSize:"1.5em"}} /> Paper
                                 </label>
                             </div>
                         </div>
                     </div>
+
+
 
                     <div className="field is-horizontal">
                         <div className="field-label is-normal">

@@ -10,14 +10,14 @@ const instance = axios.create({
 export class ContsAPI {
 
     static errorHandler(e) {
-        console.error("AUTH API ERROR");
+        console.error("CONTS API ERROR");
         console.error(e);
         throw e;
     }
 
-    static addCont(){
-        return instance.get('/auth/currentuser')
+    static addCont(name, lat, lng, type, level){
+        return instance.post('/conts/addcont', {name, lat, lng, type, level})
         .then((res) => res.data.user)
-        .catch(AuthAPI.errorHandler)
+        .catch(ContsAPI.errorHandler)
     }
 }
