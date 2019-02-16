@@ -64,7 +64,7 @@ render () {
         </center>
       </div>
       <div style={{ width: "79%", height: "700px", float: "rigth" }}>
-        <AddCont google={this.props.google} />
+        <ShowCont google={this.props.google} />
       </div>
     </React.Fragment>
   );

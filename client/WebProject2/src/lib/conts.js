@@ -15,8 +15,8 @@ export class ContsAPI {
         throw e;
     }
 
-    static getCont(){
-        return instance.get('/conts/list')
+    static getCont(type){
+        return instance.post('/conts/list', {type})
         .then((res) => res.data.cont)
         .catch(ContsAPI.errorHandler)
     }

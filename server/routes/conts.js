@@ -9,9 +9,10 @@ let contPromise = (req, cont) => {
 }
 
 
-router.get("/list", (req, res) => {
-    Container.find({ type: "plastic" })
-    // const { user } = req;
+router.post("/list", (req, res, next) => {
+    const { type } = req.body;
+    console.log(type)
+    Container.find({ type: type })
     .then(cont => {
         console.log(cont)
         res.json({ cont });
@@ -29,7 +30,6 @@ router.post("/addcont", (req, res, next) => {
     
     Container.findOne({ name }, "name", (err, n) => {
         if (n !== null) {
-            console.log('null')
             res.render("conts/addcont", { message: "The container already exists" });
             return;
         }

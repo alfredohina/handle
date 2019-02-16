@@ -34,7 +34,7 @@ export default class AddCont extends Component {
                     lat: "",
                     lng: ""
                 }
-            }
+            },
         };
     }
 
@@ -203,6 +203,7 @@ export default class AddCont extends Component {
                 >
                     <Marker position={this.state.marker.location} />
                 </Map>
+                {this.state.mapita}
                 </div>
             </div>
         )

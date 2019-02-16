@@ -9,28 +9,28 @@ const LoadingContainer = (props) => (
   )
 
   
-  export default class AddCont extends Component {
+  export default class ShowCont extends Component {
       constructor() {
           super();
           this.state = {
               locations: [],
+              state: false,
               positions: [
                   { lat: 37.78259481194291, lng: -122.43306307946779 },
                 ],
-                state: false,
-                state2: false,
+              positions2: [],
+              positions3: [],
             };
         }
         
         
         componentDidMount(){
-        const {locations} = this.state;
-        let that = this
-        ContsAPI.getCont(locations)
+            const type = "plastic"
+        ContsAPI.getCont(type)
         .then( cont =>{
-            const a= cont.map(e=>({lat:e.lat,lng:e.lng}))
+            const a= cont.map(e=>({lat:e.lat,lng:e.lng,level:e.level}))
             console.log(a)
-            that.setState({ 
+            this.setState({ 
                 locations: cont,
                 positions: a,
                 state: true
@@ -41,26 +41,39 @@ const LoadingContainer = (props) => (
     
 
 
-    handleChange = (e) => {
-        this.setState({ 
-            state: true,
-            state2: false,
-            positions: [
-                { lat: 40.365774408723254, lng: -3.662289775146519 },
-            ],
-        })
-      };
+      handlChange(type) {
+          console.log(type)
+          ContsAPI.getCont(type)
+              .then(cont => {
+                  const a = cont.map(e => ({ lat: e.lat, lng: e.lng, level: e.level }))
+                  console.log(a)
+                  const b = []
+                  const c = []
+                  for (var index = 0; index < a.length; index++) {
+                      if (a[index].level === 2) {
+                          b.push(a[index])
+                      }
+                  }
+                  this.setState({
+                      locations: cont,
+                      positions2: b,
+                      state: false
+                  })
+                  for (var index = 0; index < a.length; index++) {
+                    if (a[index].level === 3) {
+                        c.push(a[index])
+                    }
+                }
+                this.setState({
+                    positions3: c
+                })
+              }).then(() => {
+                  this.setState({
+                      state: true
+                  })
+              })
 
-      handleClose = (e) => {
-        this.setState({
-            state: false,
-            state2: true,
-            positions: [
-                { lat: 41.365774408723254, lng: -3.662289775146519 },
-            ]
-        })
       }
-      
 
 
     render() {
@@ -86,14 +99,23 @@ const LoadingContainer = (props) => (
         
 
         
-        const {state, state2, positions} = this.state
+        const {state, positions2, positions3, positions} = this.state
 
         return (
             <div>
+                <button onClick={() => this.handlChange("organic")}>Organic</button>
+                <button onClick={() => this.handlChange("plastic")}>Plastic</button>
+                <button onClick={() => this.handlChange("paper")}>Paper</button>
+                <button onClick={() => this.handlChange("glass")}>Glass</button>
+
+                
             {!state ? ('a') : (
                 <React.Fragment>
     <Map
-        style={{height: '100%', width: '100%', position: 'relative'}}
+        style={{
+            width: "500px",
+            height: "500px"
+        }}
         className='map'
         google={this.props.google}
         zoom={11}
@@ -103,14 +125,27 @@ const LoadingContainer = (props) => (
             lng: -3.662289775146519
         }}
     >
+
+            <HeatMap
+            gradient={gradient}
+            opacity={1000}
+            positions={positions2}
+            radius={50}
+            />
+
+<HeatMap
+            gradient={gradient}
+            opacity={1000}
+            positions={positions3}
+            radius={50}
+            />
+        
         <HeatMap
             gradient={gradient}
             opacity={1000}
             positions={positions}
             radius={50}
         />
-        
-
        
     </Map>
 

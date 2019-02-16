@@ -23,7 +23,6 @@ class _App extends Component {
             <Route exact path="/" component={Home} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />
-            <Route exact path="/showcont" render={() => <ShowCont google={this.props.google} />} />
             <Route exact path="/navigation" render={() => <Navigation google={this.props.google} />}/>
             <Route exact path="/demoshow" component={Demoshow} />
 
