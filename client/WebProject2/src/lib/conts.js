@@ -15,6 +15,12 @@ export class ContsAPI {
         throw e;
     }
 
+    static getCont(){
+        return instance.get('/conts/list')
+        .then((res) => res.data.cont)
+        .catch(ContsAPI.errorHandler)
+    }
+
     static addCont(name, lat, lng, type, level){
         return instance.post('/conts/addcont', {name, lat, lng, type, level})
         .then((res) => res.data.user)

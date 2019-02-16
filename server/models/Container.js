@@ -2,7 +2,9 @@ const mongoose = require('mongoose');
 const Schema   = mongoose.Schema;
 
 const containerSchema = new Schema({
-  location: { type: { type: String }, coordinates: [Number] },
+  name: String,
+  lat: Number,
+  lng: Number,
   type: {type: String, enum:["organic", "plastic", "glass", "paper"] },
   level: Number,
   }, {
@@ -12,5 +14,5 @@ const containerSchema = new Schema({
   }
 });
 
-const Container = mongoose.model('Review', containerSchema);
+const Container = mongoose.model('Containers', containerSchema);
 module.exports = Container;

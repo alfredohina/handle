@@ -2,32 +2,48 @@ const express = require("express");
 const router = express.Router();
 const Container = require("../models/Container");
 
-let contPromise = (req, user) => {
+let contPromise = (req, cont) => {
     return new Promise((resolve, reject) => {
-        req.container(user, e => e ? reject(e) : resolve(user))
+        req.container(cont, e => e ? reject(e) : resolve(cont))
     })
 }
 
+
+router.get("/list", (req, res) => {
+    Container.find({ type: "plastic" })
+    // const { user } = req;
+    .then(cont => {
+        console.log(cont)
+        res.json({ cont });
+      })
+    .catch(e => res.json({ message: "Something went wrong" }));
+    });
+    
+
 router.post("/addcont", (req, res, next) => {
-    const { location, type } = req.body;
-    if (location === "" || type === "") {
-        res.render("cont/addcont", { message: "Select location and type of container" });
+    const { name, lat, lng, type, level } = req.body;
+    if (lat === "" || type === "") {
+        res.render("conts/addcont", { message: "Select location and type of container" });
         return;
     }
-
-    Container.findOne({ location }, "location", (err, cont) => {
-        if (cont !== null) {
-            res.render("cont/addcont", { message: "The container already exists" });
+    
+    Container.findOne({ name }, "name", (err, n) => {
+        if (n !== null) {
+            console.log('null')
+            res.render("conts/addcont", { message: "The container already exists" });
             return;
         }
 
-        const newCont = new User({
-            location,
-            type
+        const newCont = new Container({
+            name,
+            lat,
+            lng,
+            type,
+            level
         });
 
         newCont.save()
-            .then(cont => loginPromise(req, cont).then(cont => res.json({ cont })))
+            .then(cont => contPromise(req, cont).then(cont => res.json({ cont })))
             .catch(err => {
                 res.json({
                     message: "Something goes Bad"
@@ -35,3 +51,5 @@ router.post("/addcont", (req, res, next) => {
             })
     });
 });
+
+module.exports = router;

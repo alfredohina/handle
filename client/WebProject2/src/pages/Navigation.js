@@ -6,14 +6,20 @@ import AddCont from './AddCont';
 import { AuthAPI } from "../lib/auth";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import ShowCont from './ShowCont';
+import { withRouter } from "react-router-dom";
 
 
 library.add(faArrowLeft)
 
-const _Navigation = ({ user, dispatch }) => {
-  const { username } = user;
+export class _Navigation extends React.Component {
+
+render () {
+  const { dispatch, user } = this.props;
+
   return (
     <React.Fragment>
+    
       <div className="Navigation">
         <center>
           <img className="avatarImg" src="./images/avatar.png" alt="avatar" width="60%" />
@@ -58,11 +64,11 @@ const _Navigation = ({ user, dispatch }) => {
         </center>
       </div>
       <div style={{ width: "79%", height: "700px", float: "rigth" }}>
-        <AddCont />
+        <AddCont google={this.props.google} />
       </div>
     </React.Fragment>
   );
-}
-// }
+}}
 
-export const Navigation = connect(store => ({ user: store.user }))(_Navigation);
+
+export const Navigation = connect(store=>({user:store.user}))(withRouter(_Navigation));

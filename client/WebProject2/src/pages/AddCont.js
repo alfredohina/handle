@@ -15,7 +15,7 @@ const LoadingContainer = (props) => (
   )
 
 
-export class AddCont extends Component {
+export default class AddCont extends Component {
     constructor() {
         super();
         this.state = {
@@ -37,6 +37,8 @@ export class AddCont extends Component {
             }
         };
     }
+
+    
 
 
     handleFormSubmit = (event) => {
@@ -97,7 +99,6 @@ export class AddCont extends Component {
 
 
     addMarker = (location, map, c) => {
-        console.log(this.state)
         this.setState( {
             marker: {
                 location:{
@@ -111,6 +112,8 @@ export class AddCont extends Component {
 
     render() {
         const {name} = this.state;
+        // console.log(this.props)
+        console.log(this.props.google)
         return (
             <div>
 
@@ -206,8 +209,3 @@ export class AddCont extends Component {
     }
 }
 
-
-export default GoogleApiWrapper({
-    apiKey: ("AIzaSyAU3EUjvc0pieMBfL77Qd0dHvQN5QUPSSg"),
-    LoadingContainer: LoadingContainer
-})(AddCont)
