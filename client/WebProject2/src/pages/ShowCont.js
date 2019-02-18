@@ -2,6 +2,12 @@ import React, { Component } from "react";
 import { Map, HeatMap, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 import { ContsAPI } from "../lib/conts";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+library.add(faTrash)
+
+
 
 
 const LoadingContainer = (props) => (
@@ -20,13 +26,15 @@ const LoadingContainer = (props) => (
                 ],
               positions2: [],
               positions3: [],
+              showingInfoWindow: false,
+    activeMarker: {},
+    selectedPlace: {},
             };
         }
         
         
         componentDidMount(){
-            const type = "plastic"
-        ContsAPI.getCont(type)
+        ContsAPI.getCont()
         .then( cont =>{
             const a= cont.map(e=>({lat:e.lat,lng:e.lng,level:e.level}))
             console.log(a)
@@ -43,14 +51,14 @@ const LoadingContainer = (props) => (
 
       handlChange(type) {
           console.log(type)
-          ContsAPI.getCont(type)
+          ContsAPI.getContSearch(type)
               .then(cont => {
                   const a = cont.map(e => ({ lat: e.lat, lng: e.lng, level: e.level }))
                   console.log(a)
                   const b = []
                   const c = []
                   for (var index = 0; index < a.length; index++) {
-                      if (a[index].level === 2) {
+                      if (a[index].level >= 0) {
                           b.push(a[index])
                       }
                   }
@@ -59,14 +67,14 @@ const LoadingContainer = (props) => (
                       positions2: b,
                       state: false
                   })
-                  for (var index = 0; index < a.length; index++) {
-                    if (a[index].level === 3) {
-                        c.push(a[index])
-                    }
-                }
-                this.setState({
-                    positions3: c
-                })
+                //   for (var index = 0; index < a.length; index++) {
+                //     if (a[index].level === 3) {
+                //         c.push(a[index])
+                //     }
+                // }
+                // this.setState({
+                //     positions3: c
+                // })
               }).then(() => {
                   this.setState({
                       state: true
@@ -74,6 +82,25 @@ const LoadingContainer = (props) => (
               })
 
       }
+      
+
+
+      onMapClicked = (props) => {
+        if (this.state.showingInfoWindow) {
+          this.setState({
+            showingInfoWindow: false,
+            activeMarker: null
+          })
+        }
+      };
+
+      onMarkerClick = (props, marker, e) =>
+      this.setState({
+          selectedPlace: props,
+          activeMarker: marker,
+          showingInfoWindow: true
+        }
+        );
 
 
     render() {
@@ -97,13 +124,17 @@ const LoadingContainer = (props) => (
             'rgba(255, 0, 0, 1)'
         ];
         
-
+        const polyline = [
+            { lat: 37.789411, lng: -122.422116 },
+            { lat: 37.785757, lng: -122.421333 },
+            { lat: 37.789352, lng: -122.415346 }
+          ]
         
         const {state, positions2, positions3, positions} = this.state
 
         return (
             <div>
-                <button onClick={() => this.handlChange("organic")}>Organic</button>
+                <button onClick={() => this.handlChange("organic")}><FontAwesomeIcon icon="trash" style={{color:"#836a4b", fontSize:"1.5em"}} /></button>
                 <button onClick={() => this.handlChange("plastic")}>Plastic</button>
                 <button onClick={() => this.handlChange("paper")}>Paper</button>
                 <button onClick={() => this.handlChange("glass")}>Glass</button>
@@ -144,8 +175,9 @@ const LoadingContainer = (props) => (
             gradient={gradient}
             opacity={1000}
             positions={positions}
-            radius={50}
+            radius={2}
         />
+
        
     </Map>
 

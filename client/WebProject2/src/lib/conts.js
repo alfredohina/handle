@@ -15,7 +15,13 @@ export class ContsAPI {
         throw e;
     }
 
-    static getCont(type){
+    static getCont(){
+        return instance.post('/conts/listinit')
+        .then((res) => res.data.cont)
+        .catch(ContsAPI.errorHandler)
+    }
+
+    static getContSearch(type){
         return instance.post('/conts/list', {type})
         .then((res) => res.data.cont)
         .catch(ContsAPI.errorHandler)

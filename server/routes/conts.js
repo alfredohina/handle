@@ -9,16 +9,25 @@ let contPromise = (req, cont) => {
 }
 
 
+router.post("/listinit", (req, res, next) => {
+    Container.find()
+        .then(cont => {
+            console.log(cont)
+            res.json({ cont });
+        })
+        .catch(e => res.json({ message: "Something went wrong" }));
+});
+
 router.post("/list", (req, res, next) => {
     const { type } = req.body;
     console.log(type)
     Container.find({ type: type })
-    .then(cont => {
-        console.log(cont)
-        res.json({ cont });
-      })
-    .catch(e => res.json({ message: "Something went wrong" }));
-    });
+        .then(cont => {
+            console.log(cont)
+            res.json({ cont });
+        })
+        .catch(e => res.json({ message: "Something went wrong" }));
+});
     
 
 router.post("/addcont", (req, res, next) => {
