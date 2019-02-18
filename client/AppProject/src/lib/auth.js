@@ -15,6 +15,13 @@ export class AuthAPI {
         throw e;
     }
 
+    static currentUser() {
+        return instance
+          .get("/api/auth/currentUser")
+          .then(res => res.data)
+          .catch(err => console.log(err));
+      }
+
     static loggedin(){
         return instance.get('/auth/currentuser')
         .then((res) => res.data.user)
@@ -22,6 +29,7 @@ export class AuthAPI {
     }
 
     static login(username, password){
+        console.log(username)
         return instance.post('/auth/login',{username, password})
         .then((res) => res.data)
         .catch(AuthAPI.errorHandler)
@@ -42,7 +50,7 @@ export class AuthAPI {
         .catch(AuthAPI.errorHandler);
     }
 
-    static logout(username, password){
+    static logout(){
         return instance.get('/auth/logout')
         .then((res) => res)
         .catch(AuthAPI.errorHandler)

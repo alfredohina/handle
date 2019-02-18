@@ -10,6 +10,13 @@ export const login = (user) => {
         type: "LOGOUT",
     }
   }
+
+  export const isAuth = status => {
+    return {
+      type: "IS_AUTH",
+      status
+    };
+  };
   
   export const errorMessageAction = (message) => {
     return {
