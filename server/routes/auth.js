@@ -69,7 +69,7 @@ router.post("/image", uploadCloud.single("photo"), (req, res, next) => {
     us.image = req.file.url
 }
   User.findByIdAndUpdate('5c5bf52c53e6a80a7df97337', us)
-    .then(() => res.redirect("/"))
+    .then(() => res.json({OK:"OK"}))
     .catch(e => console.log("Error updating profile", e));
 });
 
