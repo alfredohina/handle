@@ -50,6 +50,7 @@ export default class AddCont extends Component {
 
 
     async componentDidMount() {
+        console.log(this.state.geoposition.location)
         const { lat, lng } = await this.getcurrentLocation();
         this.setState(prev => ({
             geoposition: {
@@ -106,9 +107,7 @@ export default class AddCont extends Component {
     };
 
     render() {
-        const {name} = this.state;
-        const { google } = this.props;
-        console.log('aaa' + google)
+
         return (
             <div>
                 <Header title={"Add New Container"} />

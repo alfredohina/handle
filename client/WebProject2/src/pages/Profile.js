@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import { AuthAPI } from "../lib/auth";
 import Input from "../components/Input";
 import { Header } from '../components/Headers';
+import { withRouter } from "react-router-dom";
 
 
 
@@ -12,7 +13,8 @@ export class _Profile extends React.Component{
   constructor() {
     super()
     this.state = {
-      image: ""
+      image: "",
+      file:""
     }
   }
 
@@ -63,4 +65,4 @@ export class _Profile extends React.Component{
 
 }
 
-export const Profile = connect(store => store)(_Profile);
+export const Profile = connect(store => store)(withRouter(_Profile));

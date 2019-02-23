@@ -10,11 +10,15 @@ import { Navigation } from './pages/Navigation';
 import { GoogleApiWrapper } from 'google-maps-react';
 import Error404 from './pages/404';
 
+import dotenv from 'dotenv'
+dotenv.config()
+
+
+
 
 class _App extends Component {
   render() {
     const { user } = this.props;
-    console.log(this.props.google)
     return (
       <div>
         {user ? (
@@ -39,10 +43,12 @@ class _App extends Component {
   }
 }
 
+
 const App = withRouter(connect(store => ({ user: store.user }))(_App));
 
+
 export default GoogleApiWrapper({
-  apiKey: (process.env.MAPS_API_KEY),
+  apiKey: ("AIzaSyAU3EUjvc0pieMBfL77Qd0dHvQN5QUPSSg"),
   // LoadingContainer: LoadingContainer
   libraries: ['places', 'visualization']
 })(App)

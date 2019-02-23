@@ -20,7 +20,6 @@ render () {
   const { google } = this.props;
   console.log(google)
   return (
-    // <React.Fragment>
     <div>
       <div className="Navigation" style={{ width: "25%", position:"fixed", zIndex:"2", height:"100%", float: "left" }}>
         <center>
@@ -77,9 +76,7 @@ render () {
 
       </div>
       </div>
-    // </React.Fragment>
   );
 }}
 
-
-export const Navigation = connect(store=>({user:store.user}))(withRouter(_Navigation));
+export const Navigation = withRouter(connect(store => ({ user: store.user }))(_Navigation));

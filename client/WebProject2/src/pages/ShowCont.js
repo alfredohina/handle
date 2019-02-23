@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Map, HeatMap, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
+import { Map, HeatMap, InfoWindow, Marker, GoogleApiWrapper, showInfoWindow } from 'google-maps-react';
 import { ContsAPI } from "../lib/conts";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -175,7 +175,27 @@ const LoadingContainer = (props) => (
             radius={2}
         />
 
+<Marker
+    onClick={this.onMarkerClick}
+    name={'Your position'}
+    position={{lat: 40.365774408723254, lng: -3.662289775146519}}
+    icon={{
+      url: "../images/avatar.png",
+      anchor: new google.maps.Point(32,32),
+      scaledSize: new google.maps.Size(64,64)
+    }}>
+</Marker>
        
+
+<InfoWindow
+          marker={this.state.activeMarker}
+          visible={this.state.showingInfoWindow}>
+            <div>
+              <h1>{this.state.selectedPlace.name}</h1>
+            </div>
+        </InfoWindow>
+
+        
     </Map>
 
 </React.Fragment>
