@@ -4,11 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { ContsAPI } from "../lib/conts";
-
-
+import { Header } from "../components/Headers";
 
 library.add(faTrash)
-
 
 const LoadingContainer = (props) => (
     <div>Loading map!</div>
@@ -37,9 +35,6 @@ export default class AddCont extends Component {
             },
         };
     }
-
-    
-
 
     handleFormSubmit = (event) => {
         event.preventDefault();
@@ -112,12 +107,12 @@ export default class AddCont extends Component {
 
     render() {
         const {name} = this.state;
-        // console.log(this.props)
-        console.log(this.props.google)
+        const { google } = this.props;
+        console.log('aaa' + google)
         return (
             <div>
-
-                <form onSubmit={this.handleFormSubmit}>
+                <Header title={"Add New Container"} />
+                <form onSubmit={this.handleFormSubmit} style={{ paddingTop: "100px" }}>
 
                     <div className="field is-horizontal" style={{paddingTop: "40px"}}>
                         <div className="field-label is-normal">
@@ -189,12 +184,12 @@ export default class AddCont extends Component {
                     
                 </form>
 
-<div style={{marginLeft:"405px"}}>
-                <Map 
+<div>
+               <Map 
                     google={this.props.google}
                     style={{
                         width: "500px",
-                        height: "500px"
+                        height: "300px"
                     }}
                     initialCenter={this.state.geoposition.location}
                     center={this.state.geoposition.location}

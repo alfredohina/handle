@@ -5,6 +5,7 @@ import { ContsAPI } from "../lib/conts";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { Header } from "../components/Headers";
 library.add(faTrash)
 
 
@@ -104,8 +105,8 @@ const LoadingContainer = (props) => (
 
 
     render() {
-        console.log(this.state.positions)
-
+        const { google } = this.props;
+        console.log(google)
         
         const gradient = [
             'rgba(0, 255, 255, 0)',
@@ -124,21 +125,17 @@ const LoadingContainer = (props) => (
             'rgba(255, 0, 0, 1)'
         ];
         
-        const polyline = [
-            { lat: 37.789411, lng: -122.422116 },
-            { lat: 37.785757, lng: -122.421333 },
-            { lat: 37.789352, lng: -122.415346 }
-          ]
-        
         const {state, positions2, positions3, positions} = this.state
 
         return (
             <div>
+                <Header title={"HeatMap Urban Waste"} />
+                <div style={{ paddingTop: "100px" }}>
                 <button onClick={() => this.handlChange("organic")}><FontAwesomeIcon icon="trash" style={{color:"#836a4b", fontSize:"1.5em"}} /></button>
                 <button onClick={() => this.handlChange("plastic")}>Plastic</button>
                 <button onClick={() => this.handlChange("paper")}>Paper</button>
                 <button onClick={() => this.handlChange("glass")}>Glass</button>
-
+                </div>
                 
             {!state ? ('a') : (
                 <React.Fragment>

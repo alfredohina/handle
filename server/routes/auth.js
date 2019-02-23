@@ -2,6 +2,8 @@ const express = require("express");
 const passport = require('passport');
 const router = express.Router();
 const User = require("../models/User");
+const uploadCloud = require("../configs/cloudinary.js");
+// const { isLoggedIn } = require("../middlewares/IsLogged");
 
 // Bcrypt to encrypt passwords
 const bcrypt = require("bcrypt");
@@ -58,6 +60,17 @@ router.post("/signup", (req, res, next) => {
       })
     })
   });
+});
+
+router.post("/image", uploadCloud.single("photo"), (req, res, next) => {
+  console.log('aA')
+  const us = {}
+  if (req.file) {
+    us.image = req.file.url
+}
+  User.findByIdAndUpdate('5c5bf52c53e6a80a7df97337', us)
+    .then(() => res.redirect("/"))
+    .catch(e => console.log("Error updating profile", e));
 });
 
 router.get("/logout", (req, res) => {

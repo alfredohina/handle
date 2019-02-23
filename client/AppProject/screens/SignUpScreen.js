@@ -6,11 +6,9 @@ import { onSignIn } from "../auth/auth";
 const SignUp = ({ navigation }) => (
   <View style={{ paddingVertical: 20 }}>
     <Card>
-      <Input placeholder="Email address..." />
+      <Input placeholder="Username" />
 
-      <Input secureTextEntry placeholder="Password..." />
-
-      <Input secureTextEntry placeholder="Confirm Password..." />
+      <Input secureTextEntry placeholder="Password" />
 
       <Button
         buttonStyle={{ marginTop: 20 }}

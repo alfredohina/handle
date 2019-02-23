@@ -36,7 +36,7 @@ export class AuthAPI {
     static upload(file){
         return instance
         .post("/auth/image", file, {
-          headers: { "Content-Type": "multipart/form-data" }
+            headers: { "Content-Type": "multipart/form-data" }
         })
         .then(res => res)
         .catch(AuthAPI.errorHandler);

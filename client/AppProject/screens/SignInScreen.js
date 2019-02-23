@@ -41,7 +41,9 @@ class _SignIn extends React.Component {
     }
   }
 
+  
   render() {
+    let { dispatch, navigation } = this.props;
     let { messages } = this.props;
     return (
       <View style={{ paddingVertical: 20 }}>
@@ -60,11 +62,24 @@ class _SignIn extends React.Component {
           <Button
             buttonStyle={{ marginTop: 20 }}
             backgroundColor="#03A9F4"
-            title="SIGN IN"
+            title="LOG IN"
             onPress={() => this.handleSubmit()}
           />
+        <Text style={{ marginTop:15, textAlign: "center" }}>or</Text>
+        <Button
+            buttonStyle={{ marginTop: 20 }}
+            backgroundColor="#03A9F4"
+            title="SIGN IN"
+            onPress={() => navigation.navigate("SignUp")}
+            />
+          <Button
+            buttonStyle={{ marginTop: 20 }}
+            backgroundColor="#03A9F4"
+            title="MAP"
+            onPress={() => navigation.navigate("Mapa")}
+            />
         </Card>
-        {messages.map(m => (
+          {messages.map(m => (
           <Text key={m}>{m}</Text>
         ))}
       </View>

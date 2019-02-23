@@ -1,14 +1,11 @@
 import React from "react";
 import { Platform, StatusBar } from "react-native";
-import {
-  createStackNavigator,
-  createBottomTabNavigator,
-  createSwitchNavigator
-} from "react-navigation";
+import { createStackNavigator, createBottomTabNavigator, createSwitchNavigator} from "react-navigation";
 import { FontAwesome } from "react-native-vector-icons";
-
 import { SignIn } from "./screens/SignInScreen";
+import SignUp from "./screens/SignUpScreen";
 import Home from "./screens/HomeScreen";
+import Mapa from "./screens/MapScreen";
 import { Profile } from "./screens/ProfileScreen";
 
 const headerStyle = {
@@ -22,6 +19,13 @@ export const SignedOut = createStackNavigator({
       title: "Sign In",
       headerStyle
     }
+  },
+  SignUp: {
+    screen: SignUp,
+    navigationOptions: {
+      title: "Sign Up",
+      headerStyle
+    }
   }
 });
 
@@ -33,6 +37,15 @@ export const SignedIn = createBottomTabNavigator(
         tabBarLabel: "Home",
         tabBarIcon: ({ tintColor }) => (
           <FontAwesome name="home" size={30} color={tintColor} />
+        )
+      }
+    },
+    Mapa: {
+      screen: Mapa,
+      navigationOptions: {
+        tabBarLabel: "Map",
+        tabBarIcon: ({ tintColor }) => (
+          <FontAwesome name="map" size={30} color={tintColor} />
         )
       }
     },

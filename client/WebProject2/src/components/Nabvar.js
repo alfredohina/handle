@@ -5,7 +5,7 @@ import { AuthAPI } from "../lib/auth";
 
 
 const _NavBar = ({ user, dispatch }) => {
-
+  const {pathname} = window.location
     return (
       <div className="Nav">
         <nav className="navbar" style={{paddingTop:"10px", paddingLeft:"50px"}} role="navigation" aria-label="main navigation">
@@ -66,8 +66,9 @@ const _NavBar = ({ user, dispatch }) => {
                     </Link>
 
 
-                  ) : <div><Link to="/signup" style={{backgroundColor: "#df6769"}} className="button is-primary is-rounded">Sign up</Link>
-                      </div>}
+                  ) : <div><Link to="/" style={{backgroundColor: "#df6769"}} className="button is-primary is-rounded">Login</Link>
+                  <Link to="/signup" style={{backgroundColor: "#df6769"}} className="button is-primary is-rounded">Sign up</Link></div>}
+                    
 
                 </div>
               </div>

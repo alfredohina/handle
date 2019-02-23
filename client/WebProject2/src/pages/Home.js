@@ -42,7 +42,7 @@ handleLogin(){
           <div style={{paddingTop:"100px", paddingLeft:"50px", width:"500px"}}>
           
           <p style={{fontWeight:"bold", color:"gray", marginTop:"50px", marginBottom:"-10px"}}>ACCESS WITH USERNAME AND PASSWORD</p>
-          <p style={{fontWeight:"bold", color:"#4c71ae", fontSize:"2.6em", marginBottom:"30px"}}>Madrid Town Hall Data</p>
+          <p style={{fontWeight:"bold", color:"#4c71ae", fontSize:"2.6em", marginBottom:"50px"}}>Madrid Town Hall Data</p>
           
           <Input text="Username" onChange={e => this.setState({password:e.target.value})} />
         <Input text="Password" type="password" onChange={e => this.setState({username:e.target.value})}/>

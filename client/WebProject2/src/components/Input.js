@@ -5,11 +5,9 @@ class Input extends Component {
   render() {
     return (
       <div>
-      <label className={this.props.className}>
-       
-        {this.props.text}
-      </label>
-       <input className='input'
+       <input
+       style={{margin:"5px", width:"80%"}}
+       className='input'
        onChange={this.props.onChange}
        placeholder={this.props.placeholder}
        type={this.props.type}
