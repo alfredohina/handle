@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from 'react-router-dom'
 import Input from '../components/Input';
 import {  login  } from '../lib/Redux/actions';
 import { AuthAPI } from "../lib/auth";
@@ -29,11 +30,11 @@ handleLogin(){
     return (
       <div style={{width:"30%", display:"block", margin:"auto", textAlign:"center", marginTop:"30px"}}>
         <Input text="Nombre" onChange={e => this.setState({password:e.target.value})} />
-        <Input text="Password" onChange={e => this.setState({username:e.target.value})}/>
+        <Input text="Password" onChange={e => this.setState({username:e.target.value})} />
         <button className="button is-warning" style={{marginTop:"20px"}} onClick={() => this.handleLogin()}>Login</button>
       </div>
     );
   }
 }
 
-export const Login = connect(store => store)(_Login);
+export const Login = connect(store => store)(withRouter(_Login));

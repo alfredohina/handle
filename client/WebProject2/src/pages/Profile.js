@@ -1,7 +1,7 @@
 import React from 'react';
-import {Login} from './login';
-import {Signup} from './signup';
-import {connect} from 'react-redux';
+import { Login } from './login';
+import { Signup } from './signup';
+import { connect } from 'react-redux';
 import { AuthAPI } from "../lib/auth";
 import Input from "../components/Input";
 import { Header } from '../components/Headers';
@@ -9,54 +9,109 @@ import { withRouter } from "react-router-dom";
 
 
 
-export class _Profile extends React.Component{
+export class _Profile extends React.Component {
   constructor() {
     super()
     this.state = {
+      id:"",
+      mail:"",
       image: "",
-      file:""
+      file: "",
+      previmage: "",
+      username: "",
+      password: "",
+      refresh: ""
     }
+  }
+
+  componentDidMount() {
+    this.setState({ previmage: this.props.user.image })
+    console.log(this.props.user._id)
   }
 
 
   handleImgChange = (e) => {
     const name = "a";
     let file = new FormData();
-    file.set("name",name)
+    file.set("name", name)
     file.append("photo", e.target.files[0], name);
-    let {dispatch} = this.props;
-    dispatch({type:"IMG_UPLOAD", image: file})
-    console.log('HOLA')
+    let { dispatch } = this.props;
+    dispatch({ type: "IMG_UPLOAD", image: file })
   }
 
   handleUpload = (e) => {
     e.preventDefault();
-    console.log(this.props)
-    AuthAPI.upload(this.props.image).then(e => console.log('antonio' + e))
+    AuthAPI.upload(this.props.image).then(e => this.componentWillReceiveProps())
   };
 
-  render(){
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps)
+    // if(nextProps.user!==this.props.user){
+    //   //Perform some operation
+    //   this.setState({previmage: this.props.user.image });
+    //   this.classMethod();
+    // }
+  }
 
-    const {user} = this.props
-    return(
+  // handleUpdate = () => {
+  //   console.log(this.props.user.image)
+  //   this.setState({previmage: this.props.user.image})
+  // }
 
-      <div> 
+
+  handleFormSubmit = (event) => {
+    event.preventDefault();
+    const { mail, id } = this.state;
+    AuthAPI.updateuser(mail, id)
+        // .then(data => {
+        //     dispatch(login(data))
+        // });
+        // history.push("/");
+    };
+
+  render() {
+
+    const { user, image } = this.props
+    const { password } = this.state;
+
+    return (
+
+      <div>
         <Header title={"Profile"} />
         {user ?
-        <div>
+          <div>
 
-          <form style={{ paddingTop: "200px" }}>
-            <input type="file" onChange={(e) => this.handleImgChange(e)} name="name"/>
-            <button onClick={(e) => this.handleUpload(e)}>SUBIR</button>
-          </form>
+            <form onSubmit={this.handleFormSubmit} style={{ paddingTop: "350px" }}>
+
+              <div className="field is-horizontal" style={{ paddingTop: "40px" }}>
+                <div className="field-label is-normal">
+                  <label className="label">Email: </label>
+                </div>
+                <div className="field-body">
+                  <div className="field">
+                    <p className="control" style={{ width: "70%" }}>
+                      <input className="input" type="text" onChange={e => this.setState({ mail: e.target.value, id: this.props.user._id })} />
+                    </p>
+                  </div>
+                </div>
+              </div>
 
 
-        </div>
-        :
-        <React.Fragment>
-        <Signup/>
-        <Login/>
-        </React.Fragment>
+              <button className="button is-info" style={{color: "#fff", margin: "auto", display:"block", backgroundColor: "#4c71ae"}} type="submit" value="Submit">Edit profile</button>
+
+
+
+            </form>
+
+              <img className="avatarImg" src={this.state.previmage} alt="avatar" width="60%" style={{ width: "20%" }} />
+              <input type="file" onChange={(e) => this.handleImgChange(e)} name="name" />
+              <button onClick={(e) => this.handleUpload(e)}>SUBIR</button>
+          </div>
+          :
+          <React.Fragment>
+            <Signup />
+            <Login />
+          </React.Fragment>
         }
 
       </div>

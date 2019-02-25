@@ -111,11 +111,39 @@ export default class AddCont extends Component {
         return (
             <div>
                 <Header title={"Add New Container"} />
-                <form onSubmit={this.handleFormSubmit} style={{ paddingTop: "100px" }}>
+
+                <div style={{ display:"block", paddingTop: "100px" }}>
+               <Map 
+                    disableDefaultUI= "false"
+                    google={this.props.google}
+                    style={{
+                        marginTop: "-40px",
+                        marginLeft: "-20px",
+                        width: "74%",
+                        height: "400px",
+                        borderBottomRightRadius: "40px"
+                    }}
+                    // initialCenter={this.state.geoposition.location}
+                    initialCenter={{
+                        lat: 40.4475031,
+                        lng: -3.6119417
+                    }}
+                    center={this.state.geoposition.location}
+                    zoom={14}
+                    onClick={(t, map, c) =>{ this.addMarker(c.latLng, map)
+                    console.log(c)}}
+                >
+                    <Marker position={this.state.marker.location} />
+                </Map>
+                {/* {this.state.mapita} */}
+                </div>
+
+                    <div style={{ display:"block"}}>
+                <form onSubmit={this.handleFormSubmit} style={{ paddingTop: "350px" }}>
 
                     <div className="field is-horizontal" style={{paddingTop: "40px"}}>
                         <div className="field-label is-normal">
-                            <label className="label">Name: </label>
+                            <label className="label">Name / Street: </label>
                         </div>
                         <div className="field-body">
                             <div className="field">
@@ -134,8 +162,8 @@ export default class AddCont extends Component {
                         <div className="field-body">
                             <div className="field">
                                 <p className="control" style={{width: "70%"}}>
-                                <input className="input" style={{width: "48%", marginRight:"4%"}} type="text" name="name" value={this.state.marker.location.lat} />
-                                <input className="input" style={{width: "48%"}} type="text" name="name" value={this.state.marker.location.lng} />
+                                <input className="input" style={{opacity: "0.2", width: "48%", marginRight:"4%"}} type="text" name="name" value={this.state.marker.location.lat} />
+                                <input className="input" style={{opacity: "0.2", width: "48%"}} type="text" name="name" value={this.state.marker.location.lng} />
                                 </p>
                             </div>
                         </div>
@@ -165,39 +193,16 @@ export default class AddCont extends Component {
                                 </label>
                             </div>
                         </div>
+
+
                     </div>
-
-
-
-                    <div className="field is-horizontal">
-                        <div className="field-label is-normal">
-                            <input className="button is-primary" type="submit" value="Submit" />
+                        <div style={{marginTop:"30px"}}>
+                            <button className="button is-info" style={{color: "#fff", margin: "auto", display:"block", backgroundColor: "#4c71ae"}} type="submit" value="Submit">Create Container</button>
                         </div>
-                        <div className="field-body">
-                            <div className="field">
 
-                            </div>
-                        </div>
-                    </div>
 
                     
                 </form>
-
-<div>
-               <Map 
-                    google={this.props.google}
-                    style={{
-                        width: "500px",
-                        height: "300px"
-                    }}
-                    initialCenter={this.state.geoposition.location}
-                    center={this.state.geoposition.location}
-                    zoom={14}
-                    onClick={(t, map, c) =>{ this.addMarker(c.latLng, map)}}
-                >
-                    <Marker position={this.state.marker.location} />
-                </Map>
-                {this.state.mapita}
                 </div>
             </div>
         )

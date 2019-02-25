@@ -73,6 +73,15 @@ router.post("/image", uploadCloud.single("photo"), (req, res, next) => {
     .catch(e => console.log("Error updating profile", e));
 });
 
+router.post("/editprofile", (req, res, next) => {
+  const us = {}
+  us.mail= req.body.mail
+  console.log(req.body.id, us)
+  User.findByIdAndUpdate( req.body.id, us)
+    .then(() => res.json({OK:"OK"}))
+    .catch(e => console.log("Error updating profile", e));
+});
+
 router.get("/logout", (req, res) => {
   req.logout();
   res.json({succes:"Done"});

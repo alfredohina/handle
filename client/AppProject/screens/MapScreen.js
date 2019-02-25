@@ -1,7 +1,7 @@
-import React from "react";
-import { View } from "react-native";
+import React, { Component } from 'react';
+import { Text, View, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { MapView } from 'expo';
+import { Constants, MapView, Location, Permissions } from 'expo';
 import { ContsAPI } from "../src/lib/conts";
 
 
@@ -9,12 +9,26 @@ class _Mapa extends React.Component {
   constructor() {
     super();
     this.state = {
-      locations: []
+      locations: [],
+      latitude: 40.342323,
+      longitude: -3.23451423,
+      error: null,
     };
   }
 
-
   componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          error: null,
+        });
+        console.log(this.state)
+      },
+      (error) => this.setState({ error: error.message }),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+    );
     ContsAPI.getCont()
       .then(cont => {
         const a = cont.map(e => ({ latitude: e.lat, longitude: e.lng }))
@@ -24,7 +38,7 @@ class _Mapa extends React.Component {
       })
       .catch(e => e);
   }
-
+  
 
   render() {
     let { navigation } = this.props;
@@ -33,12 +47,13 @@ class _Mapa extends React.Component {
         <MapView
           style={{ flex: 1 }}
           zoom={20}
-          initialRegion={{
-            latitude: 40.365774408723254,
-            longitude: -3.662289775146519,
+          region={{
+            latitude: this.state.latitude,
+            longitude: this.state.longitude,
             latitudeDelta: 0.004,
             longitudeDelta: 0.005,
-          }}>
+          }}
+          >
 
           {this.state.locations.map(marker => (
             <MapView.Marker

@@ -45,3 +45,19 @@ html, body {margin:0; padding:0; height:100%;}
   width: 20%;
   height: 700px;
 }
+
+/* Google Maps Copyrigth deleted*/
+.gmnoprint a, .gmnoprint span, .gm-style-cc {
+  display:none;
+}
+.gmnoprint div {
+  background:none !important;
+}
+
+.activated {
+  background-color: #e6e6e6
+}
+
+.inactive {
+  background-color: white
+}

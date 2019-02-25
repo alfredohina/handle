@@ -42,6 +42,14 @@ export class AuthAPI {
         .catch(AuthAPI.errorHandler);
     }
 
+    static updateuser(mail, id){
+        console.log(mail, id)
+        return instance
+        .post("/auth/editprofile", {mail, id})
+        .then(res => res)
+        .catch(AuthAPI.errorHandler);
+    }
+
     static logout(username, password){
         return instance.get('/auth/logout')
         .then((res) => res)
