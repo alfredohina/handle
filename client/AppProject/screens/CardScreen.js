@@ -3,7 +3,7 @@ import { Platform, StatusBar, ScrollView, Text, Linking, View, BackHandler } fro
 import { Card, Button } from "react-native-elements";
 import { connect } from "react-redux";
 
-class _Home extends React.Component{
+class _Cards extends React.Component{
   constructor() {
     super();
     this.state = {
@@ -13,23 +13,24 @@ class _Home extends React.Component{
   
   render() {
     let { navigation } = this.props;
+    console.log(this.props)
 
     return (
   <View style={{ flex: 1 }}>
     <ScrollView contentContainerStyle={{ paddingVertical: 20 }}>
       <Card>
-        <Text>Hola a</Text>
+        <Text>CARDS</Text>
         <Button
             buttonStyle={{ marginTop: 20 }}
             backgroundColor="#03A9F4"
             title="PROPS"
-            onPress={() => console.log(this.props.user._id)}
+            onPress={() => console.log("user: " + this.props.user._id + " cont: " + this.props.navigation.state.params.marker)}
           />
           <Button
             buttonStyle={{ marginTop: 20 }}
             backgroundColor="#03A9F4"
             title="BACK"
-            onPress={() => navigation.navigate('Card')}
+            onPress={() => navigation.navigate('Mapa')}
           />
       </Card>
     </ScrollView>
@@ -38,4 +39,4 @@ class _Home extends React.Component{
 };
 
 
-export default (Home = connect(store => ({ user: store.user }))(_Home));
+export default (Cards = connect(store => ({ user: store.user }))(_Cards));

@@ -31,7 +31,7 @@ class _Mapa extends React.Component {
     );
     ContsAPI.getCont()
       .then(cont => {
-        const a = cont.map(e => ({ latitude: e.lat, longitude: e.lng }))
+        const a = cont.map(e => ({ latitude: e.lat, longitude: e.lng, id:e._id }))
         this.setState({
           locations: a
         })
@@ -42,14 +42,18 @@ class _Mapa extends React.Component {
 
   render() {
     let { navigation } = this.props;
+    // console.log(this.props)
+    console.log(this.state.locations)
     return (
       <View style={{ flex: 1 }}>
         <MapView
           style={{ flex: 1 }}
           zoom={20}
           region={{
-            latitude: this.state.latitude,
-            longitude: this.state.longitude,
+            // latitude: this.state.latitude,
+            // longitude: this.state.longitude,
+            latitude: 40.360420,
+            longitude: -3.665145,
             latitudeDelta: 0.004,
             longitudeDelta: 0.005,
           }}
@@ -61,10 +65,9 @@ class _Mapa extends React.Component {
               coordinate={marker}
               title={"marker.latitude"}
               description={'a'}
-              onPress={() => navigation.navigate("Profile", {
-                marker: marker.latitude,
+              onPress={() => navigation.navigate("Cards", {
+                marker: marker.id,
               })}
-              image={require('../public/images/trash.png')}
             />
           ))}
 
