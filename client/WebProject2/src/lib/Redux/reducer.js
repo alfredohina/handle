@@ -5,6 +5,7 @@ const initialStore = {
 }
 
 export const rootReducer = (store = initialStore, action) => {
+    console.log('reducer')
     switch(action.type){
         case "ADD_MESSAGE":
             store = {

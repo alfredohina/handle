@@ -14,10 +14,10 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 
-
-
 class _App extends Component {
+  
   render() {
+    console.log('app')
     const { user } = this.props;
     return (
       <div>

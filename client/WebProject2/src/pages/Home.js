@@ -12,7 +12,6 @@ import { NavBar } from "../components/Nabvar";
 library.add(faArrowRight)
 
 
-
 export class _Home extends Component {
 
   constructor(){

@@ -35,7 +35,6 @@ class _SignUp extends React.Component {
           }
         })
         .catch(e => console.log(e));
-    
   }
 
   
