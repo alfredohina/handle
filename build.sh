@@ -5,6 +5,7 @@ cd client/WebProject2
 npm install
 npm run build
 cd ..
+cd ..
 cp -r ./client/WebProject2/build ./server/public
 echo "*" > ./server/public/.gitignore
 echo "Done build & copy!"
