@@ -105,7 +105,7 @@ export class _Profile extends React.Component {
 
               <img className="avatarImg" src={this.state.previmage} alt="avatar" width="60%" style={{ width: "20%" }} />
               <input type="file" onChange={(e) => this.handleImgChange(e)} name="name" />
-              <button onClick={(e) => this.handleUpload(e)}>SUBIR</button>
+              <button onClick={(e) => this.handleUpload(e)}>UPLOAD</button>
           </div>
           :
           <React.Fragment>

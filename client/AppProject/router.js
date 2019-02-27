@@ -7,8 +7,7 @@ import SignUp from "./screens/SignUpScreen";
 import Home from "./screens/HomeScreen";
 import Mapa from "./screens/MapScreen";
 import Cards from "./screens/CardScreen";
-
-import { Profile } from "./screens/ProfileScreen";
+import Profile from "./screens/ProfileScreen";
 
 const headerStyle = {
   marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
