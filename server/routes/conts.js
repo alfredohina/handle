@@ -12,7 +12,6 @@ let contPromise = (req, cont) => {
 router.post("/listinit", (req, res, next) => {
     Container.find()
         .then(cont => {
-            console.log(cont)
             res.json({ cont });
         })
         .catch(e => res.json({ message: "Something went wrong" }));
@@ -20,7 +19,6 @@ router.post("/listinit", (req, res, next) => {
 
 router.post("/list", (req, res, next) => {
     const { type } = req.body;
-    console.log(type)
     Container.find({ type: type })
         .then(cont => {
             console.log(cont)
@@ -28,7 +26,7 @@ router.post("/list", (req, res, next) => {
         })
         .catch(e => res.json({ message: "Something went wrong" }));
 });
-    
+
 
 router.post("/addcont", (req, res, next) => {
     const { name, lat, lng, type, level } = req.body;
@@ -36,7 +34,7 @@ router.post("/addcont", (req, res, next) => {
         res.render("conts/addcont", { message: "Select location and type of container" });
         return;
     }
-    
+
     Container.findOne({ name }, "name", (err, n) => {
         if (n !== null) {
             res.render("conts/addcont", { message: "The container already exists" });
@@ -59,6 +57,23 @@ router.post("/addcont", (req, res, next) => {
                 })
             })
     });
+});
+
+router.post("/updatelevel", (req, res, next) => {
+    const cont = {}
+    cont.id = req.body.id
+    cont.level = req.body.level
+    // cont.notifications.user= req.body.user
+    // cont.notifications.date= req.body.date
+    const date = req.body.date
+    const user = req.body.user
+    Container.findByIdAndUpdate(cont.id,
+        {
+            $set: { level: cont.level },
+            notifications: {$push: {user: user, date: date}}
+        })
+        .then(() => res.json({ OK: "OK" }))
+        .catch(e => console.log("Error updating profile", e));
 });
 
 module.exports = router;

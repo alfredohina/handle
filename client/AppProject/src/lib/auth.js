@@ -29,7 +29,6 @@ export class AuthAPI {
     }
 
     static login(username, password){
-        console.log(username)
         return instance.post('/auth/login',{username, password})
         .then((res) => res.data)
         .catch(AuthAPI.errorHandler)
@@ -51,7 +50,6 @@ export class AuthAPI {
     }
 
     static updateuser(mail, id){
-        console.log(mail, id)
         return instance
         .post("/auth/editprofile", {mail, id})
         .then(res => res)

@@ -7,6 +7,9 @@ const containerSchema = new Schema({
   lng: Number,
   type: {type: String, enum:["organic", "plastic", "glass", "paper"] },
   level: Number,
+  notifications: [
+    {user: String, date: String}
+  ]
   }, {
   timestamps: {
     createdAt: 'created_at',

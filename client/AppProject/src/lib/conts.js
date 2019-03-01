@@ -27,9 +27,9 @@ export class ContsAPI {
         .catch(ContsAPI.errorHandler)
     }
 
-    static addCont(name, lat, lng, type, level){
-        return instance.post('/conts/addcont', {name, lat, lng, type, level})
-        .then((res) => res.data.user)
+    static updateLevel(id, level, user, date){
+        return instance.post('/conts/updatelevel', {id, level, user, date})
+        .then((res) => res)
         .catch(ContsAPI.errorHandler)
     }
 }

@@ -2,6 +2,10 @@ import React from "react";
 import { View } from "react-native";
 import { Card, Button, Text, Image, Input } from "react-native-elements";
 
+
+import { ImagePicker } from 'expo';
+
+
 import { connect } from "react-redux";
 import { AuthAPI } from "../src/lib/auth";
 import { logout } from "../src/lib/redux/actions";
@@ -12,13 +16,21 @@ class _Profile extends React.Component {
     this.state = {
       id:"",
       mail:"",
-      image: "",
+      image: null,
       file: "",
       previmage: "",
       username: "",
       password: "",
       refresh: ""
     }
+  }
+
+
+  handleChoosePhoto = () => {
+    const options = {};
+    ImagePicker.launchImageLibraryAsync(options, response => {
+      console.log("response", response)
+    })
   }
 
 
@@ -59,8 +71,24 @@ class _Profile extends React.Component {
       });
   }
 
+  _pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      this.setState({ image: result.uri });
+    }
+  }
+
 
   render() {
+
+    let { image } = this.state;
+
     let { user } = this.props
     return (
       <View style={{ paddingVertical: 20 }}>
@@ -82,11 +110,25 @@ class _Profile extends React.Component {
           <View style={{alignItems:"center", justifyContent: "center" }}><Text>{user.mail}</Text></View>
           
 
+
+   
+        <Button
+          title="Pick an image from camera roll"
+          onPress={() => this._pickImage()}
+        />
+        {image &&
+          <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+
+
+
+
+
           <Input
             secureTextEntry
             placeholder="Mail"
             onChangeText={mail => this.setState({ mail })}
           />
+
 
 <Button
             buttonStyle={{ marginTop: 20 }}
@@ -95,6 +137,10 @@ class _Profile extends React.Component {
             onPress={() => this.handleFormSubmit()}
           />
 
+<Input
+            type="file"
+            onChangeText={mail => this.setState({ mail })}
+          />
 
           <Button
             backgroundColor="#03A9F4"
@@ -105,7 +151,7 @@ class _Profile extends React.Component {
 
       </View>
     );
-  }
+  } 
 }
 
 export default (Profile = connect(store => ({ user: store.user }))(_Profile));

@@ -24,14 +24,13 @@ class _Mapa extends React.Component {
           longitude: position.coords.longitude,
           error: null,
         });
-        console.log(this.state)
       },
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
     ContsAPI.getCont()
       .then(cont => {
-        const a = cont.map(e => ({ latitude: e.lat, longitude: e.lng, id:e._id }))
+        const a = cont.map(e => ({ latitude: e.lat, longitude: e.lng, id:e._id, type:e.type, name: e.name, level: e.level }))
         this.setState({
           locations: a
         })
@@ -42,8 +41,6 @@ class _Mapa extends React.Component {
 
   render() {
     let { navigation } = this.props;
-    // console.log(this.props)
-    console.log(this.state.locations)
     return (
       <View style={{ flex: 1 }}>
         <MapView
@@ -66,7 +63,7 @@ class _Mapa extends React.Component {
               title={"marker.latitude"}
               description={'a'}
               onPress={() => navigation.navigate("Cards", {
-                marker: marker.id,
+                marker: marker.id, type: marker.type, name: marker.name, level: marker.level
               })}
             />
           ))}
