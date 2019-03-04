@@ -4,7 +4,8 @@ const Schema   = mongoose.Schema;
 const reportSchema = new Schema({
   id_user:  {type:Schema.Types.ObjectId, ref:'User'},
   id_container:  {type:Schema.Types.ObjectId, ref:'Container'},
-  problem: {type:Boolean, default:false},
+  type: {type: String, enum:["organic", "plastic", "glass", "paper"] },
+  date: Number,
   }, {
   timestamps: {
     createdAt: 'created_at',
@@ -12,5 +13,5 @@ const reportSchema = new Schema({
   }
 });
 
-const Report = mongoose.model('Review', reportSchema);
+const Report = mongoose.model('Report', reportSchema);
 module.exports = Report;

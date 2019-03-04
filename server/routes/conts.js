@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const Container = require("../models/Container");
+const Report = require("../models/Report");
+
 
 let contPromise = (req, cont) => {
     return new Promise((resolve, reject) => {
@@ -21,7 +23,6 @@ router.post("/list", (req, res, next) => {
     const { type } = req.body;
     Container.find({ type: type })
         .then(cont => {
-            console.log(cont)
             res.json({ cont });
         })
         .catch(e => res.json({ message: "Something went wrong" }));
@@ -59,21 +60,37 @@ router.post("/addcont", (req, res, next) => {
     });
 });
 
-router.post("/updatelevel", (req, res, next) => {
-    const cont = {}
-    cont.id = req.body.id
-    cont.level = req.body.level
-    // cont.notifications.user= req.body.user
-    // cont.notifications.date= req.body.date
-    const date = req.body.date
-    const user = req.body.user
-    Container.findByIdAndUpdate(cont.id,
-        {
-            $set: { level: cont.level },
-            notifications: {$push: {user: user, date: date}}
+
+router.post("/addreport", (req, res, next) => {
+    console.log(req.body)
+    const { user, cont, type, date } = req.body;
+
+    const newReport = new Report({
+        id_user: user,
+        id_container: cont,
+        type,
+        date
+    });
+
+    newReport.save()
+        .then(report => res.json({ report }))
+        .catch(err => {
+            res.json({
+                message: "Something goes Bad"
+            })
         })
-        .then(() => res.json({ OK: "OK" }))
-        .catch(e => console.log("Error updating profile", e));
 });
+
+router.post("/getreports", (req, res, next) => {
+    const { user, date } = req.body;
+    const lastHours = date - 86400000
+    Report.find({ id_user: user, date: { $gt: lastHours }})
+    .then(cont => {
+        console.log(cont)
+            res.json({ cont });
+        })
+        .catch(e => res.json({ message: "Something went wrong" }));
+});
+
 
 module.exports = router;

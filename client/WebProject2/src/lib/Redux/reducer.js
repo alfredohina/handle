@@ -1,22 +1,21 @@
 const initialStore = {
     user: null,
     image: "",
-    messages:[]
+    message:false,
 }
 
 export const rootReducer = (store = initialStore, action) => {
-    console.log('reducer')
     switch(action.type){
-        case "ADD_MESSAGE":
+        case "OK_MESSAGE":
             store = {
                 ...store,
-                messages: [action.message]
+                message:true,
             }
         break;
-        case "DELETE_ALL_MESSAGES":
+        case "NO_MESSAGE":
             store = {
                 ...store,
-                messages: []
+                message:false
             }
         break;
         case "LOGIN":

@@ -5,6 +5,11 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { ContsAPI } from "../lib/conts";
 import { Header } from "../components/Headers";
+import {Message} from "../components/Message";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+
+
 
 library.add(faTrash)
 
@@ -13,7 +18,7 @@ const LoadingContainer = (props) => (
   )
 
 
-export default class AddCont extends Component {
+export class _AddCont extends Component {
     constructor() {
         super();
         this.state = {
@@ -38,9 +43,12 @@ export default class AddCont extends Component {
 
     handleFormSubmit = (event) => {
         event.preventDefault();
+        const { dispatch } = this.props;
         const { name, lat, lng, type, level } = this.state;
-        console.log(name, lat, lng, type, level)
-
+        // console.log(name, lat, lng, type, level)
+        dispatch({
+            type:"OK_MESSAGE"
+        })
         ContsAPI.addCont(name, lat, lng, type, level)
             // .then(data => {
             //     dispatch(login(data))
@@ -50,9 +58,9 @@ export default class AddCont extends Component {
 
 
     async componentDidMount() {
-        console.log(this.state.geoposition.location)
         const { lat, lng } = await this.getcurrentLocation();
         this.setState(prev => ({
+            message: false,
             geoposition: {
                 ...prev.geoposition,
                 location: {
@@ -107,7 +115,7 @@ export default class AddCont extends Component {
     };
 
     render() {
-
+        const { message } = this.props;
         return (
             <div>
                 <Header title={"Add New Container"} />
@@ -203,9 +211,15 @@ export default class AddCont extends Component {
 
                     
                 </form>
+
+                {this.props.message ? 
+                    (<Message/>) : ''
+                }
                 </div>
             </div>
         )
     }
 }
 
+
+export const AddCont = withRouter(connect(store => ({ user: store.user, message: store.message }))(_AddCont));

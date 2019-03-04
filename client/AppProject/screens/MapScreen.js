@@ -45,12 +45,12 @@ class _Mapa extends React.Component {
       <View style={{ flex: 1 }}>
         <MapView
           style={{ flex: 1 }}
-          zoom={20}
+          zoom={16}
           region={{
             // latitude: this.state.latitude,
             // longitude: this.state.longitude,
-            latitude: 40.360420,
-            longitude: -3.665145,
+            latitude: 40.365796,
+            longitude: -3.663387,
             latitudeDelta: 0.004,
             longitudeDelta: 0.005,
           }}

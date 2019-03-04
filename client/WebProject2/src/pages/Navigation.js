@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
-import AddCont from './AddCont';
+import {AddCont} from './AddCont';
 import { AuthAPI } from "../lib/auth";
 import { connect } from "react-redux";
 import ShowCont from './ShowCont';
@@ -16,9 +16,9 @@ library.add(faArrowLeft)
 export class _Navigation extends React.Component {
 
 render () {
-  const { dispatch, user } = this.props;
+  const { dispatch, user, message } = this.props;
   const { google } = this.props;
-  console.log(google)
+  console.log(this.props)
   return (
     <div>
       <div className="Navigation" style={{ width: "25%", position:"fixed", zIndex:"2", height:"100%", float: "left" }}>
@@ -79,4 +79,4 @@ render () {
   );
 }}
 
-export const Navigation = withRouter(connect(store => ({ user: store.user }))(_Navigation));
+export const Navigation = withRouter(connect(store => ({ user: store.user, message: store.message }))(_Navigation));

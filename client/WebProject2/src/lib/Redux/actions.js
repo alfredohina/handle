@@ -13,19 +13,19 @@ export const logout = () => {
   }
 }
 
-export const errorMessageAction = (message) => {
+export const message = () => {
   return {
-      type: "ADD_MESSAGE",
+      type: "OK_MESSAGE",
       message
   }
 }
 
 
-export const clearMessages = () => {
-  return {
-      type: "DELETE_ALL_MESSAGES",
-  }
-}
+// export const clearMessages = () => {
+//   return {
+//       type: "DELETE_ALL_MESSAGES",
+//   }
+// }
 
 export const imgUpload = (e) => {
   return {
