@@ -56,65 +56,12 @@ export default class ShowCont extends Component {
     }
 
 
-    //LEVEL FUNCTION
-    // const positions = [
-    //     { a: 1, level: 1 },
-    //     { a: 2, level: 1 },
-    //     { a: 3, level: 1 },
-    //     { a: 2, level: 1 },
-    //     { a: 3, level: 1 },
-    //     { a: 2, level: 1 },
-    //     { a: 3, level: 1 },
-    //     { a: 3, level: 1 },
-    //     { a: 3, level: 1 },
-    //     { a: 2, level: 1 }
-    //   ]
-    
-    // const a = positions.map(e => ({ a: e.a, level: e.level }))
-    
-    
-    // var counts = {};
-    // var def = []
-    // a.forEach(function(x) { 
-    //   var levelDef = counts[x.a] = (counts[x.a] || 0)+1;
-    //   var a = x.a
-    //   def.push({a, levelDef})
-    //   });
-    
-    // //console.log(def)
-    
-    
-    // def.sort((a,b) => (a.levelDef > b.levelDef) ? -1 : ((b.levelDef > a.levelDef) ? 1 : 0)); 
-    
-    // console.log(def)
-    
-    
-    // function getUnique(arr, comp) {
-    
-    //   const unique = arr
-    //        .map(e => e[comp])
-    
-    //      // store the keys of the unique objects
-    //     .map((e, i, final) => final.indexOf(e) === i && i)
-    
-    //     // eliminate the dead keys & store unique objects
-    //     .filter(e => arr[e]).map(e => arr[e]);
-    
-    //    return unique;
-    // }
-    
-    // getUnique(def, 'a')
-
-
-
-
-
     handlChange(type, value) {
         console.log(type)
         ContsAPI.getContSearch(type)
             .then(cont => {
-                console.log(cont)
                 const a = cont.map(e => ({ lat: e.lat, lng: e.lng, level: e.level }))
+                console.log(a)
                 const b = []
                 const c = []
                 const d = []
