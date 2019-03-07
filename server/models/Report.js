@@ -6,6 +6,10 @@ const reportSchema = new Schema({
   id_container:  {type:Schema.Types.ObjectId, ref:'Container'},
   type: {type: String, enum:["organic", "plastic", "glass", "paper"] },
   date: Number,
+  name: String,
+  lat: Number,
+  lng: Number,
+  gender: { type: String, enum: ["male", "female"] },
   }, {
   timestamps: {
     createdAt: 'created_at',

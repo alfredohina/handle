@@ -1,4 +1,4 @@
-html, body {margin:0; padding:0; height:100%;}
+/* html, body {margin:0; padding:0; height:100%;} */
 
 .App {
   text-align: center;
@@ -54,10 +54,62 @@ html, body {margin:0; padding:0; height:100%;}
   background:none !important;
 }
 
-.activated {
-  background-color: #e6e6e6
+
+
+.filters-container {
+  display: flex;
+  width: 80%;
+  align-items: baseline;
+  margin-right:20px;
+  margin-left: 50px;
+  /* background-color: grey; */
 }
 
-.inactive {
-  background-color: white
+.filters-container2 {
+  margin: 30px 200px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  /* background-color: grey; */
+}
+
+.send-btn {
+  margin-top: 30px;
+  margin: 30px 40%;
+}
+
+
+
+.filterBtn {
+  background-color: white;
+  border: none;
+  color: black;
+  width: 90%;
+  border: 2px solid #e7e7e7;
+  padding: 6px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.activated {
+  background-color: #e7e7e7
+}
+
+.filterBtn:hover {background-color: #e7e7e7;}
+
+.filters-name {
+  width: 100px;
+  text-align: right;
+  margin-right: 30px;
+}
+
+.green-message {
+  background-color: green;
+  margin: 120px 30%;
 }

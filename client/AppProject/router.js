@@ -10,43 +10,71 @@ import Cards from "./screens/CardScreen";
 import Profile from "./screens/ProfileScreen";
 
 const headerStyle = {
-  marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
+  marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  backgroundColor: "#4c71ae",
 };
 
-// const navigationCard = {
-//   headerTitle: 'Home',
-//   headerLeft: <Text onPress={() => navigation.navigate('Mapa')}>AA</Text>,
-//   headerStyle: headerStyle
-// }
-
-export const CardsNavigator = createStackNavigator({
+export const HomeNavigator = createStackNavigator({
   Home: {
+    screen: Home,
+    navigationOptions: {
+      title: "Report Incidents",
+      headerStyle,
+      headerTitleStyle: {
+        color: 'white'
+      }
+    }
+  },
+  Cards: {
     screen: Cards,
-    // navigationOptions: () => (navigationCard)
-  }
-});
+    navigationOptions: {
+      title: "Report",
+      headerStyle,
+      headerTintColor: 'white',
+      headerTitleStyle: { color: 'white' }
+    }
+  },
+  Mapa: {
+    screen: Mapa,
+    navigationOptions: {
+      title: "Map",
+      headerStyle,
+      headerTintColor: 'white',
+      headerTitleStyle: { color: 'white' }
+    }
+  },
+  Profile: {
+    screen: Profile,
+    navigationOptions: {
+      title: "Profile",
+      headerStyle,
+      headerTintColor: 'white',
+      headerTitleStyle: { color: 'white' }
+    }
+  },
+})
+
 
 export const SignedOut = createStackNavigator({
   SignIn: {
     screen: SignIn,
     navigationOptions: {
-      title: "Sign In",
-      headerStyle
-    }
+      header: null
+  }
   },
   SignUp: {
     screen: SignUp,
     navigationOptions: {
-      title: "Sign Up",
-      headerStyle
-    }
+      header: null
+  }
   }
 });
+
 
 export const SignedIn = createBottomTabNavigator(
   {
     Home: {
-      screen: Home,
+      screen: HomeNavigator,
       navigationOptions: {
         tabBarLabel: "Home",
         tabBarIcon: ({ tintColor }) => (
@@ -55,7 +83,7 @@ export const SignedIn = createBottomTabNavigator(
       }
     },
     Mapa: {
-      screen: Mapa,
+      screen: HomeNavigator,
       navigationOptions: {
         tabBarLabel: "Map",
         tabBarIcon: ({ tintColor }) => (
@@ -64,7 +92,7 @@ export const SignedIn = createBottomTabNavigator(
       }
     },
     Profile: {
-      screen: Profile,
+      screen: HomeNavigator,
       navigationOptions: {
         tabBarLabel: "Profile",
         tabBarIcon: ({ tintColor }) => (
@@ -76,11 +104,14 @@ export const SignedIn = createBottomTabNavigator(
   {
     tabBarOptions: {
       style: {
-        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
+        activeTintColor: "#7c96c8",
+        inactiveTintColor: "white",
+        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 5
       }
     }
   }
 );
+
 
 export const createRootNavigator = (signedIn = false) => {
   return createSwitchNavigator(
@@ -88,19 +119,17 @@ export const createRootNavigator = (signedIn = false) => {
       SignedIn: {
         screen: SignedIn
       },
-      Cards: {
-        screen: Cards,
-        navigationOptions: {
-          tabBarLabel: "Cards",
-          tabBarIcon: ({ tintColor }) => (
-            <FontAwesome name="user" size={30} color={tintColor} />
-            )
-          }
-        },
       SignedOut: {
         screen: SignedOut
       },
+      Cards: {
+        screen: Cards,
+        navigationOptions: {
+          title: "Cards",
+          headerStyle
+        }
       },
+    },
     {
       initialRouteName: signedIn ? "SignedIn" : "SignedOut"
     }

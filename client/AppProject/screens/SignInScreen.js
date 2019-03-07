@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { View } from "react-native";
-import { Card, Button, Input, Text } from "react-native-elements";
+import { View, Image } from "react-native";
+import { Button, Input, Text, withTheme } from "react-native-elements";
 import { AuthAPI } from "../src/lib/auth";
 import { login, errorMessageAction, clearMessages } from "../src/lib/redux/actions";
 
@@ -46,39 +46,44 @@ class _SignIn extends React.Component {
     let { dispatch, navigation } = this.props;
     let { messages } = this.props;
     return (
-      <View style={{ paddingVertical: 20 }}>
-        <Card>
-          <Input
-            placeholder="Username"
-            onChangeText={username => this.setState({ username })}
-          />
+      <View style={{ paddingVertical: 90, flex: 1, backgroundColor: "#4c71ae" }}>
 
-          <Input
-            secureTextEntry
-            placeholder="Password"
-            onChangeText={password => this.setState({ password })}
-          />
+        <Image style={{ alignSelf: "center" }} source={require('../public/images/world.png')} />
+          <View style={{ paddingHorizontal: 30, paddingVertical: 30}}>
+            <Input
+              placeholderTextColor="grey"
+              inputStyle={{ width: "50%" }}
+              borderBottomColor='white'
+              borderBottomWidth="1"
+              placeholderTextColor="white"
+              placeholder="Username"
+              onChangeText={username => this.setState({ username })}
+            />
+            <Input
+              inputStyle={{ width: "50%" }}
+              borderBottomColor='white'
+              borderBottomWidth="1"
+              placeholderTextColor="white"
+              placeholder="Password"
+              secureTextEntry
+              onChangeText={password => this.setState({ password })}
+            />
+          </View>
 
           <Button
-            buttonStyle={{ marginTop: 20 }}
-            backgroundColor="#03A9F4"
+            buttonStyle={{ borderRadius: 100, marginTop: 20, width: "50%", alignSelf:"center", backgroundColor: "white" }}
             title="LOG IN"
+            titleStyle={{ color: "tomato", fontWeight: "bold"}}
             onPress={() => this.handleSubmit()}
           />
-        <Text style={{ marginTop:15, textAlign: "center" }}>or</Text>
+        <Text style={{ marginTop:15, textAlign: "center", color: "white" }}>or</Text>
         <Button
-            buttonStyle={{ marginTop: 20 }}
-            backgroundColor="#03A9F4"
+            buttonStyle={{ borderRadius: 100, marginTop: 20, width: "50%", alignSelf:"center", backgroundColor: "white" }}
+            titleStyle={{ color: "tomato", fontWeight: "bold"}}
             title="SIGN IN"
             onPress={() => navigation.navigate("SignUp")}
             />
-          <Button
-            buttonStyle={{ marginTop: 20 }}
-            backgroundColor="#03A9F4"
-            title="MAP"
-            onPress={() => navigation.navigate("Mapa")}
-            />
-        </Card>
+
           {messages.map(m => (
           <Text key={m}>{m}</Text>
         ))}

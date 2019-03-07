@@ -63,13 +63,17 @@ router.post("/addcont", (req, res, next) => {
 
 router.post("/addreport", (req, res, next) => {
     console.log(req.body)
-    const { user, cont, type, date } = req.body;
+    const { user, cont, type, date, name, lat, lng, gender } = req.body;
 
     const newReport = new Report({
         id_user: user,
         id_container: cont,
         type,
-        date
+        date,
+        name,
+        lat,
+        lng,
+        gender
     });
 
     newReport.save()
@@ -82,11 +86,23 @@ router.post("/addreport", (req, res, next) => {
 });
 
 router.post("/getreports", (req, res, next) => {
-    const { user, date } = req.body;
+    const { user, date, cont } = req.body;
     const lastHours = date - 86400000
-    Report.find({ id_user: user, date: { $gt: lastHours }})
+    Report.find({ id_user: user, date: { $gt: lastHours }, id_container: cont})
     .then(cont => {
-        console.log(cont)
+        // console.log(cont)
+            res.json({ cont });
+        })
+        .catch(e => res.json({ message: "Something went wrong" }));
+});
+
+
+router.post("/getreportstype", (req, res, next) => {
+    const { type, hour, gender } = req.body
+    console.log(gender)
+    Report.find( {type: type, date: { $gt: hour }, gender: gender } )
+        .then(cont => {
+            console.log(cont)
             res.json({ cont });
         })
         .catch(e => res.json({ message: "Something went wrong" }));

@@ -8,6 +8,7 @@ const userSchema = new Schema({
   type: { type: String, enum: ["admin", "citizen"] },
   disctrit: String,
   image: String,
+  gender: { type: String, enum: ["male", "female"] },
 }, {
   timestamps: {
     createdAt: 'created_at',

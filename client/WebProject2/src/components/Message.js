@@ -20,9 +20,9 @@ export class _Message extends Component {
     render() {
 console.log(this.props)
         return (
-            <div>
-                <p style={{ marginTop: 50, backgroundColor: "green" }}>Created</p>
-                <p onClick={this.handleFormSubmit} style={{ marginTop: 50, backgroundColor: "green" }}>(X)</p>
+            <div className={"green-message"}>
+                <p>Created</p>
+                <p onClick={this.handleFormSubmit}>(X)</p>
             </div>
         );
 

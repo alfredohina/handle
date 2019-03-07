@@ -52,7 +52,6 @@ class _Profile extends React.Component {
     e.preventDefault();
     AuthAPI.upload(this.props.image).then(e => this.componentWillReceiveProps())
   };
-
   handleFormSubmit = () => {
     const { mail, id } = this.state;
     AuthAPI.updateuser(mail, id)
@@ -63,11 +62,11 @@ class _Profile extends React.Component {
   handleLogOut() {
     let { dispatch, navigation } = this.props;
     AuthAPI.logout()
+      // .then(() => {
+      //   dispatch({ type: "LOGOUT" })
+      // })
       .then(() => {
-        dispatch(logout());
-      })
-      .then(() => {
-        navigation.navigate("SignedOut");
+        navigation.navigate("SignIn");
       });
   }
 
@@ -99,7 +98,7 @@ class _Profile extends React.Component {
               justifyContent: "center",
               width: 150,
               height: 150,
-              borderRadius: "50%",
+              borderRadius: 50,
               alignSelf: "center",
               marginBottom: 20
             }}
@@ -144,7 +143,7 @@ class _Profile extends React.Component {
 
           <Button
             backgroundColor="#03A9F4"
-            title="SIGN OUT"
+            title="LOG OUT"
             onPress={() => this.handleLogOut()}
           />
         </Card>

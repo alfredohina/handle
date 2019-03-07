@@ -8,6 +8,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { faSun } from '@fortawesome/free-solid-svg-icons'
 import { faMoon } from '@fortawesome/free-solid-svg-icons'
 import { Header } from "../components/Headers";
+import { ReportAPI } from "../lib/Redux/report";
 library.add(faTrash)
 library.add(faSun)
 library.add(faMoon)
@@ -35,7 +36,8 @@ export default class ShowCont extends Component {
             showingInfoWindow: false,
             activeMarker: {},
             selectedPlace: {},
-            activated: null
+            activated: null,
+            type: null
         };
     }
 
@@ -57,80 +59,75 @@ export default class ShowCont extends Component {
 
 
     handlChange(type, value) {
-        console.log(type)
-        ContsAPI.getContSearch(type)
-            .then(cont => {
-                const a = cont.map(e => ({ lat: e.lat, lng: e.lng, level: e.level }))
-                console.log(a)
-                const b = []
-                const c = []
-                const d = []
-                const e = []
-                for (var index = 0; index < a.length; index++) {
-                    if (a[index].level >= 0 && a[index].level <= 5) {
-                        b.push(a[index])
-                    }
-                }
-                for (var index = 0; index < a.length; index++) {
-                    if (a[index].level >= 6 && a[index].level <= 10) {
-                        c.push(a[index])
-                    }
-                }
-                for (var index = 0; index < a.length; index++) {
-                    if (a[index].level >= 11 && a[index].level <= 15) {
-                        d.push(a[index])
-                    }
-                }
-                for (var index = 0; index < a.length; index++) {
-                    if (a[index].level >= 16) {
-                        e.push(a[index])
-                    }
-                }
-                this.setState({
-                    locations: cont,
-                    positions2: b,
-                    positions3: c,
-                    positions4: d,
-                    positions5: e,
-                    state: false
-                })
-            }).then(() => {
-                console.log(this.state.activated)
-                this.setState({
-                    state: true,
-                    activated: value
-                })
-            })
-    }
+        console.log(type, value)
 
-    handlChangeAll(type, value) {
-        console.log(type)
-        ContsAPI.getCont()
+
+        if (type) {
+            console.log(type)
+            this.setState({
+            type: type,
+            })
+        } else {
+            this.setState({
+            type: ["organic", "glass", "plastic", "paper"]
+            })
+        }
+
+        console.log(this.state.type, value)
+
+        ReportAPI.getReportsType(this.state.type)
             .then(cont => {
-                const a = cont.map(e => ({ lat: e.lat, lng: e.lng, level: e.level }))
-                console.log(a)
+                const positions = cont.map(e => ({ lat: e.lat, lng: e.lng }))
+                // console.log(positions)
+                var counts = {};
+                var def = []
+                positions.forEach(function(x) {
+                    var levelDef = counts[x.lat] = (counts[x.lat] || 0) + 1;
+                    var lat = x.lat
+                    var lng = x.lng
+                    def.push({ lat, lng, levelDef })
+                });
+
+                def.sort((a,b) => (a.levelDef > b.levelDef) ? -1 : ((b.levelDef > a.levelDef) ? 1 : 0)); 
+
+
+                var positionsSearch = []
+                
+                function getUnique(arr, comp) {
+                    // console.log(arr)
+                    const unique = arr
+                    .map(e => e[comp])
+                    .map((e, i, final) => final.indexOf(e) === i && i)
+                    .filter(e => arr[e]).map(e => arr[e]);
+                    // console.log(unique)
+                    return positionsSearch.push(unique);
+                }
+                getUnique(def, 'lat')
+                
+            // console.log(positionsSearch[0])
+
                 const b = []
                 const c = []
                 const d = []
                 const e = []
-                for (var index = 0; index < a.length; index++) {
-                    if (a[index].level >= 0 && a[index].level <= 5) {
-                        b.push(a[index])
+                for (var index = 0; index < positionsSearch[0].length; index++) {
+                    if (positionsSearch[0][index].levelDef >= 0 && positionsSearch[0][index].levelDef <= 5) {
+                        b.push(positionsSearch[0][index])
                     }
                 }
-                for (var index = 0; index < a.length; index++) {
-                    if (a[index].level >= 6 && a[index].level <= 10) {
-                        c.push(a[index])
+                for (var index = 0; index < positionsSearch[0].length; index++) {
+                    if (positionsSearch[0][index].levelDef >= 6 && positionsSearch[0][index].levelDef <= 10) {
+                        c.push(positionsSearch[0][index])
                     }
                 }
-                for (var index = 0; index < a.length; index++) {
-                    if (a[index].level >= 11 && a[index].level <= 15) {
-                        d.push(a[index])
+                for (var index = 0; index < positionsSearch[0].length; index++) {
+                    if (positionsSearch[0][index].levelDef >= 11 && positionsSearch[0][index].levelDef <= 15) {
+                        d.push(positionsSearch[0][index])
                     }
                 }
-                for (var index = 0; index < a.length; index++) {
-                    if (a[index].level >= 16) {
-                        e.push(a[index])
+                for (var index = 0; index < positionsSearch[0].length; index++) {
+                    if (positionsSearch[0][index].levelDef >= 16) {
+                        e.push(positionsSearch[0][index])
                     }
                 }
                 this.setState({
@@ -142,7 +139,7 @@ export default class ShowCont extends Component {
                     state: false
                 })
             }).then(() => {
-                console.log(this.state.activated)
+                // console.log(this.state)
                 this.setState({
                     state: true,
                     activated: value
@@ -310,14 +307,14 @@ export default class ShowCont extends Component {
                         className={
                             this.state.activated === 1 ? 'activated' : ('inactive')
                         }
-                        onClick={() => this.handlChangeAll()}><FontAwesomeIcon icon="trash" style={{ color: "#836a4b", fontSize: "1.5em" }} /> SHOW ALL
+                        onClick={() => this.handlChange('', 1)}><FontAwesomeIcon icon="trash" style={{ color: "#836a4b", fontSize: "1.5em" }} /> SHOW ALL
                     </button>
                     <button
                         style={{ padding: "15px", borderRadius: "12px", fontSize: "15px" }}
                         className={
                             this.state.activated === 1 ? 'activated' : ('inactive')
                         }
-                        onClick={() => this.handlChange("organic", 1)}><FontAwesomeIcon icon="trash" style={{ color: "#836a4b", fontSize: "1.5em" }} /> Organic
+                        onClick={() => this.handlChange('organic', 1)}><FontAwesomeIcon icon="trash" style={{ color: "#836a4b", fontSize: "1.5em" }} /> Organic
                     </button>
                     <button
                         style={{ padding: "15px", borderRadius: "12px" }}
@@ -366,7 +363,6 @@ export default class ShowCont extends Component {
                         onClick={() => this.handlChange("paper", 3)}><FontAwesomeIcon icon="moon" style={{ color: "#4d1a00", fontSize: "1.5em" }} /> Noche
                     </button>
                 </div> */}
-
 
             </div>
         )

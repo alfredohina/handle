@@ -213,7 +213,7 @@ export class _AddCont extends Component {
                 </form>
 
                 {this.props.message ? 
-                    (<Message/>) : ''
+                    (<Message/>) : ('')
                 }
                 </div>
             </div>

@@ -49,8 +49,12 @@ class _Mapa extends React.Component {
           region={{
             // latitude: this.state.latitude,
             // longitude: this.state.longitude,
-            latitude: 40.365796,
-            longitude: -3.663387,
+            //CANILLEJAS
+            latitude: 40.448838,
+            longitude: -3.609025,
+            //MERCAM
+            // latitude: 40.365796,
+            // longitude: -3.663387,
             latitudeDelta: 0.004,
             longitudeDelta: 0.005,
           }}
@@ -58,12 +62,13 @@ class _Mapa extends React.Component {
 
           {this.state.locations.map(marker => (
             <MapView.Marker
-              key={marker.latitude}
-              coordinate={marker}
-              title={"marker.latitude"}
-              description={'a'}
-              onPress={() => navigation.navigate("Cards", {
-                marker: marker.id, type: marker.type, name: marker.name, level: marker.level
+            key={marker.latitude}
+            coordinate={marker}
+            // title={marker.name}
+            // description={'a'}
+            onPress={() => navigation.navigate("Cards", {
+                marker: marker.id, type: marker.type, name: marker.name, level: marker.level,
+                lat: marker.latitude, lng: marker.longitude, name: marker.name
               })}
             />
           ))}

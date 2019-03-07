@@ -29,13 +29,13 @@ export class AuthAPI {
     }
 
     static login(username, password){
-        return instance.post('/auth/login',{username, password})
+        return instance.post('/auth/logincit',{username, password})
         .then((res) => res.data)
         .catch(AuthAPI.errorHandler)
     }
 
-    static signup(username, password, type){
-        return instance.post('/auth/signup',{username, password, type})
+    static signup(username, password, type, gender){
+        return instance.post('/auth/signup',{username, password, type, gender})
         .then((res) => res.data.user)
         .catch(AuthAPI.errorHandler)
     }

@@ -29,9 +29,21 @@ router.post("/login", (req, res, next) => {
   })(req,res,next)
 });
 
+router.post("/logincit", (req, res, next) => {
+  passport.authenticate("local",(err, theUser, failureDetails) => {
+    // console.log(theUser)
+    if (err) return res.status(500).json({ message: 'Something went wrong' });
+    if (!theUser) return res.status(401).json(failureDetails);
+    if (theUser.type !== "citizen") return res.status(401).json(failureDetails);
+
+    loginPromise(req, theUser)
+      .then(() => res.status(200).json(req.user))
+      .catch(e => res.status(500).json({ message: e.message }));
+  })(req,res,next)
+});
 
 router.post("/signup", (req, res, next) => {
-  const { username, password, type } = req.body;
+  const { username, password, type, gender } = req.body;
   if (username === "" || password === "") {
     res.render("auth/signup", { message: "Indicate username and password" });
     return;
@@ -49,7 +61,8 @@ router.post("/signup", (req, res, next) => {
     const newUser = new User({
       username,
       password: hashPass,
-      type
+      type,
+      gender
     });
 
     newUser.save()

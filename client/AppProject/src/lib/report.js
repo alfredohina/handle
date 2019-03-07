@@ -15,15 +15,15 @@ export class ReportAPI {
         throw e;
     }
 
-    static addReport(user, cont, type, date){
-        return instance.post('/conts/addreport', {user, cont, type, date})
+    static addReport(user, cont, type, date, name, lat, lng, gender){
+        return instance.post('/conts/addreport', {user, cont, type, date, name, lat, lng, gender})
         .then((res) => res)
         .catch(ReportAPI.errorHandler)
     }
 
 
-    static getData(user, date){
-        return instance.post('conts/getreports', {user, date})
+    static getData(user, date, cont){
+        return instance.post('conts/getreports', {user, date, cont})
         .then((res) => res.data.cont)
         .catch(ReportAPI.errorHandler)
     }
