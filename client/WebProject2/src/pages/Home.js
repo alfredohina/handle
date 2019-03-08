@@ -18,7 +18,8 @@ export class _Home extends Component {
     super();
     this.state = {
         username:"",
-        password:""
+        password:"",
+        msg: "",
     }
 }
 
@@ -30,10 +31,21 @@ handleLogin(){
       dispatch(login(user))
       history.push("/navigation")
     })
-    .catch( e =>  e);
-}
+    .catch(() => this.alertLogin()
+         );
+    }
+
+  alertLogin = () => {
+    this.setState(() => {
+      return { msg: true}
+  })
+    window.setTimeout(() => {
+      this.setState({ msg: false })
+  }, 3000)
+  }
   
   render() {
+    const { msg } = this.state;
     return (
       <React.Fragment>
         <NavBar/>
@@ -50,6 +62,18 @@ handleLogin(){
         </button>
 
           </div>
+
+          {msg ? (
+      
+      <div style={{backgroundColor: "#df6769",  width:340, marginLeft:60, marginTop: 20}}>
+      <p style={{color: "white", textAlign:"center", marginTop: 5, marginBottom:5, fontSize: 16}}>
+        Username or password does not exist. <br></br> Please, try again
+      </p>
+      </div>
+      
+      ) : (<React.Fragment></React.Fragment>)}
+
+
         </div>
       </React.Fragment>   
     );

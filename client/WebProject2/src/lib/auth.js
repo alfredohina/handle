@@ -24,7 +24,7 @@ export class AuthAPI {
     static login(username, password){
         return instance.post('/auth/login',{username, password})
         .then((res) => res.data)
-        .catch(AuthAPI.errorHandler)
+        // .catch(AuthAPI.errorHandler)
     }
 
     static signup(username, password, type){

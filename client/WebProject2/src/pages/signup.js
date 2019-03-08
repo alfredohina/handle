@@ -18,7 +18,8 @@ export class _Signup extends Component {
     this.state = {
       username: "",
       password: "",
-      type: "admin"
+      type: "admin",
+      msg: "",
     }
   }
 
@@ -31,7 +32,17 @@ export class _Signup extends Component {
       dispatch(login(user))
       history.push("/navigation")
     })
-    .catch(e => console.log('catch de handlesubmit'+ e))
+    .catch(() => this.alertLogin()
+         );
+    }
+
+  alertLogin = () => {
+    this.setState(() => {
+      return { msg: true}
+  })
+    window.setTimeout(() => {
+      this.setState({ msg: false })
+  }, 4000)
   }
 
   handleName(e){
@@ -43,7 +54,7 @@ export class _Signup extends Component {
   
 
   render() {
-
+    const { msg } = this.state;
     return (
       <React.Fragment>
       <NavBar/>
@@ -59,6 +70,18 @@ export class _Signup extends Component {
             </button>
 
           </div>
+
+          {msg ? (
+      
+      <div style={{backgroundColor: "#df6769",  width:340, marginLeft:60, marginTop: 20}}>
+      <p style={{color: "white", textAlign:"center", marginTop: 5, marginBottom:5, fontSize: 16}}>
+      The username is already registered, or you have not completed all fields. <br></br> Please, try again
+      </p>
+      </div>
+      
+      ) : (<React.Fragment></React.Fragment>)}
+
+
         </div>
       </React.Fragment>
     );

@@ -20,12 +20,12 @@ export const message = () => {
   }
 }
 
-
-// export const clearMessages = () => {
-//   return {
-//       type: "DELETE_ALL_MESSAGES",
-//   }
-// }
+export const errorMessageAction = (message) => {
+  return {
+      type: "ADD_MESSAGE",
+      message
+  }
+}
 
 export const imgUpload = (e) => {
   return {

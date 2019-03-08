@@ -22,7 +22,7 @@ console.log(this.props)
         return (
             <div className={"green-message"}>
                 <p>Created</p>
-                <p onClick={this.handleFormSubmit}>(X)</p>
+                <p onClick={this.handleFormSubmit}>CLOSE</p>
             </div>
         );
 

@@ -25,7 +25,7 @@ export class _Profile extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({ previmage: this.props.user.image })
+    this.setState({ avatar: this.props.user.image })
   }
 
 
@@ -40,7 +40,6 @@ export class _Profile extends React.Component {
   
   handleUpload = (e) => {
     e.preventDefault();
-    console.log(this.props.image)
     AuthAPI.upload(this.props.image).then(() => 
       this.setState({ previmage: this.props.user.image }))
       // window.location.reload())
@@ -59,7 +58,7 @@ export class _Profile extends React.Component {
 
   render() {
 
-    const { user, image } = this.props
+    const { user, image, mail } = this.props
     const { password } = this.state;
 
     return (
@@ -69,7 +68,8 @@ export class _Profile extends React.Component {
         {user ?
           <div>
 
-            <form onSubmit={this.handleFormSubmit} style={{ paddingTop: "350px" }}>
+            <form onSubmit={this.handleFormSubmit} style={{ paddingTop: "150px" }}>
+            <p>{user.mail}</p>
 
               <div className="field is-horizontal" style={{ paddingTop: "40px" }}>
                 <div className="field-label is-normal">

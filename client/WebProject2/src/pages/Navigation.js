@@ -24,7 +24,7 @@ render () {
       <div className="Navigation" style={{ width: "25%", position:"fixed", zIndex:"2", height:"100%", float: "left" }}>
         <center>
           <img className="avatarImg" src={user.image} alt="avatar" width="60%" />
-          <p>{user.username}</p>
+          <p>Welcome {user.username}</p>
 
 
           <aside className="menu" style={{ marginTop: "40px" }}>
@@ -44,10 +44,9 @@ render () {
               <li>
                 <ul>
                   <li>
-                  <NavLink exact activeStyle={{color:"white"}} to="/navigation/add">Urban Waste</NavLink>
+                  <NavLink exact activeStyle={{color:"white"}} to="/navigation/add">Add Containers</NavLink>
                   </li>
-                  <NavLink exact activeStyle={{color:"white"}} to="/navigation/cont">Public Transport</NavLink>
-                  <li><a>Lighting</a></li>
+                  <NavLink exact activeStyle={{color:"white"}} to="/navigation/cont">Show Heatmap</NavLink>
                 </ul>
               </li>
               <li>
