@@ -49,7 +49,7 @@ class _Cards extends React.Component{
     let gender = this.props.user.gender
     ReportAPI.addReport(user, marker, type, date, name, lat, lng, gender)
     .then(this.setState(() => {
-      return { reported: true}
+      return { reported: true, button: false}
     }))
     .then(this.timeChange())
     };
