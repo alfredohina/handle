@@ -1,9 +1,10 @@
 import React from 'react';
-import { Platform, StatusBar, ScrollView, Text, Linking, View, BackHandler } from "react-native";
+import { ScrollView, Text, Image, View } from "react-native";
 import { Card, Button } from "react-native-elements";
 import { connect } from "react-redux";
 import { ReportAPI } from "../src/lib/report";
 import { MapView } from 'expo';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 class _Cards extends React.Component{
@@ -79,14 +80,19 @@ class _Cards extends React.Component{
           }}
           >
 
-            <MapView.Marker
+          <MapView.Marker
             key={navigation.state.params.latitude}
             coordinate={{
               latitude: navigation.state.params.lat,
               longitude: navigation.state.params.lng
             }}
             title={navigation.state.params.name}
+            >
+            <Image
+                source={require('../public/images/icon.png')}
+                style={{ width: 40, height: 40 }}
             />
+          </MapView.Marker>
 
         </MapView>
 
@@ -99,7 +105,6 @@ class _Cards extends React.Component{
 
         <Text style={{ color:"white", fontSize: 16 }}>Container name: {navigation.state.params.name}</Text>
         <Text style={{ color:"white", fontSize: 16 }}>Type of waste: {navigation.state.params.type}</Text>
-        <Text style={{ color:"white", fontSize: 16 }}>Level: {navigation.state.params.level}</Text>
 
 
           <Button
@@ -111,11 +116,29 @@ class _Cards extends React.Component{
           />
         
 
-      {this.state.reported ? (<Text style={{backgroundColor: "green", marginTop:20}}>
-        Reported!! Please Wait
-      </Text>) : (<React.Fragment></React.Fragment>)}
+
+
 
       </Card>
+
+      {this.state.reported ? (
+      
+      <View style={{backgroundColor: "green", margin:20}}>
+      <Icon
+                name="check"
+                size={55}
+                color="white"
+                style={{ alignSelf:"center", marginTop: 20 }}
+              />
+      <Text style={{color: "white", alignSelf:"center", marginTop: 10, marginBottom:20, fontSize: 20}}>
+        Reported!! Please Wait
+      </Text>
+      </View>
+      
+      ) : (<React.Fragment></React.Fragment>)}
+
+
+
     </ScrollView>
   </View>
   )}

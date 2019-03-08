@@ -1,6 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import { Card, Button, Text, Image, Input } from "react-native-elements";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 import { ImagePicker } from 'expo';
@@ -16,12 +17,14 @@ class _Profile extends React.Component {
     this.state = {
       id:"",
       mail:"",
+      mail2: "",
       image: null,
       file: "",
       previmage: "",
       username: "",
       password: "",
-      refresh: ""
+      refresh: "",
+      msg: false
     }
   }
 
@@ -35,7 +38,7 @@ class _Profile extends React.Component {
 
 
   componentDidMount() {
-    this.setState({ id: this.props.user._id, previmage: this.props.user.image })
+    this.setState({ id: this.props.user._id, previmage: this.props.user.image, mail2: this.props.user.mail })
   }
 
 
@@ -53,8 +56,21 @@ class _Profile extends React.Component {
     AuthAPI.upload(this.props.image).then(e => this.componentWillReceiveProps())
   };
   handleFormSubmit = () => {
+    let { navigation } = this.props;
     const { mail, id } = this.state;
     AuthAPI.updateuser(mail, id)
+    .then(() => {
+      this.Input.clear()
+      this.setState(() => {
+        return { mail2: mail, msg: true}
+      })
+      window.setTimeout(() => {
+        this.setState({ msg: false })
+    }, 3000)
+    })
+    .then(() => {
+      navigation.navigate("Profile");
+    })
     };
 
 
@@ -86,12 +102,12 @@ class _Profile extends React.Component {
 
   render() {
 
-    let { image } = this.state;
+    let { image, msg } = this.state;
 
     let { user } = this.props
     return (
       <View style={{ paddingVertical: 20 }}>
-        <Card title={user.username}>
+        <Card title={`Welcome ${user.username}`}>
           <Image
             style={{
               alignItems: "center",
@@ -106,46 +122,63 @@ class _Profile extends React.Component {
               uri: user.image
             }}
           />
-          <View style={{alignItems:"center", justifyContent: "center" }}><Text>{user.mail}</Text></View>
-          
+          <View style={{alignItems:"center", justifyContent: "center" }}>
+          <Text>{this.state.mail2}</Text>
+          <Text>{user.gender}</Text>
+          </View>
 
 
-   
         <Button
-          title="Pick an image from camera roll"
-          onPress={() => this._pickImage()}
-        />
+            buttonStyle={{ borderRadius: 100, marginTop: 20, width: "50%", alignSelf:"center", backgroundColor: "#4c71ae" }}
+            titleStyle={{ color: "tomato", fontWeight: "bold"}}
+            title="Choose an image"
+            onPress={() => this._pickImage()}
+          />
         {image &&
           <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
 
 
-
-
-
           <Input
-            secureTextEntry
-            placeholder="Mail"
+            inputStyle={{marginTop: 30}}
+            placeholder="Update your Mail"
             onChangeText={mail => this.setState({ mail })}
+            ref={input => { this.Input = input }}
           />
 
 
-<Button
-            buttonStyle={{ marginTop: 20 }}
-            backgroundColor="#03A9F4"
+
+          <Button
+            buttonStyle={{ borderRadius: 100, marginTop: 20, width: "50%", alignSelf:"center", backgroundColor: "#4c71ae" }}
+            titleStyle={{ color: "tomato", fontWeight: "bold"}}
             title="UPDATE USER"
             onPress={() => this.handleFormSubmit()}
           />
 
-<Input
-            type="file"
-            onChangeText={mail => this.setState({ mail })}
-          />
+{msg ? (
+          <View style={{backgroundColor: "green", marginTop:10, marginLeft:30, marginRight: 30}}>
+            <Text style={{color: "white", textAlign:"center", marginTop: 5, marginBottom:5, fontSize: 20}}>
+              User updated
+            </Text>
+          </View>
+      
+      ) : (<React.Fragment></React.Fragment>)}
+
 
           <Button
-            backgroundColor="#03A9F4"
-            title="LOG OUT"
+            icon={
+              <Icon
+                name="sign-out"
+                size={15}
+                color="red"
+              />
+            }
+            buttonStyle={{ borderRadius: 100, marginTop: 20, width: "50%", alignSelf:"center", backgroundColor: "white" }}
+            titleStyle={{ color: "tomato", fontWeight: "bold"}}
+            title=" LOG OUT"
             onPress={() => this.handleLogOut()}
           />
+
+
         </Card>
 
       </View>

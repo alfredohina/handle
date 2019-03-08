@@ -7,7 +7,7 @@ const userSchema = new Schema({
   mail: String,
   type: { type: String, enum: ["admin", "citizen"] },
   disctrit: String,
-  image: String,
+  image: {type: String, default: 'https://res.cloudinary.com/drlexgkiu/image/upload/v1552048953/handle-city/avatar.png'},
   gender: { type: String, enum: ["male", "female"] },
 }, {
   timestamps: {

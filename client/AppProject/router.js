@@ -14,15 +14,26 @@ const headerStyle = {
   backgroundColor: "#4c71ae",
 };
 
-export const HomeNavigator = createStackNavigator({
-  Home: {
-    screen: Home,
+export const ProfileNavigator = createStackNavigator({
+  Profile: {
+    screen: Profile,
     navigationOptions: {
-      title: "Report Incidents",
+      title: "Profile",
       headerStyle,
-      headerTitleStyle: {
-        color: 'white'
-      }
+      headerTintColor: 'white',
+      headerTitleStyle: { color: 'white' }
+    }
+  }
+});
+
+export const MapaNavigator = createStackNavigator({
+  Mapa: {
+    screen: Mapa,
+    navigationOptions: {
+      title: "Map",
+      headerStyle,
+      headerTintColor: 'white',
+      headerTitleStyle: { color: 'white' }
     }
   },
   Cards: {
@@ -34,26 +45,20 @@ export const HomeNavigator = createStackNavigator({
       headerTitleStyle: { color: 'white' }
     }
   },
-  Mapa: {
-    screen: Mapa,
-    navigationOptions: {
-      title: "Map",
-      headerStyle,
-      headerTintColor: 'white',
-      headerTitleStyle: { color: 'white' }
-    }
-  },
-  Profile: {
-    screen: Profile,
-    navigationOptions: {
-      title: "Profile",
-      headerStyle,
-      headerTintColor: 'white',
-      headerTitleStyle: { color: 'white' }
-    }
-  },
-})
+});
 
+export const HomeNavigator = createStackNavigator({
+  Home: {
+    screen: Home,
+    navigationOptions: {
+      title: "Report Incidents",
+      headerStyle,
+      headerTitleStyle: {
+        color: 'white'
+      }
+    }
+  }
+})
 
 export const SignedOut = createStackNavigator({
   SignIn: {
@@ -83,7 +88,7 @@ export const SignedIn = createBottomTabNavigator(
       }
     },
     Mapa: {
-      screen: HomeNavigator,
+      screen: MapaNavigator,
       navigationOptions: {
         tabBarLabel: "Map",
         tabBarIcon: ({ tintColor }) => (
@@ -92,7 +97,7 @@ export const SignedIn = createBottomTabNavigator(
       }
     },
     Profile: {
-      screen: HomeNavigator,
+      screen: ProfileNavigator,
       navigationOptions: {
         tabBarLabel: "Profile",
         tabBarIcon: ({ tintColor }) => (
@@ -103,10 +108,11 @@ export const SignedIn = createBottomTabNavigator(
   },
   {
     tabBarOptions: {
+      activeTintColor: "tomato",
+      inactiveTintColor: "white",
       style: {
-        activeTintColor: "#7c96c8",
-        inactiveTintColor: "white",
-        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 5
+        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 5,
+        backgroundColor: "#4c71ae"
       }
     }
   }

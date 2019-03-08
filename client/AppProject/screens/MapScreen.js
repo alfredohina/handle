@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, Image } from "react-native";
 import { connect } from "react-redux";
-import { Constants, MapView, Location, Permissions } from 'expo';
+import { MapView } from 'expo';
 import { ContsAPI } from "../src/lib/conts";
 
 
@@ -31,7 +31,7 @@ class _Mapa extends React.Component {
     ContsAPI.getCont()
       .then(cont => {
         const a = cont.map(e => ({ latitude: e.lat, longitude: e.lng, id:e._id, type:e.type, name: e.name, level: e.level }))
-        this.setState({
+        this.setState({ 
           locations: a
         })
       })
@@ -67,10 +67,17 @@ class _Mapa extends React.Component {
             // title={marker.name}
             // description={'a'}
             onPress={() => navigation.navigate("Cards", {
-                marker: marker.id, type: marker.type, name: marker.name, level: marker.level,
-                lat: marker.latitude, lng: marker.longitude, name: marker.name
-              })}
-            />
+              marker: marker.id, type: marker.type, name: marker.name, level: marker.level,
+              lat: marker.latitude, lng: marker.longitude, name: marker.name
+            })}
+            >
+            <Image
+    source={require('../public/images/icon.png')}
+    style={{ width: 40, height: 40 }}
+ />
+
+
+        </MapView.Marker>
           ))}
 
         </MapView>

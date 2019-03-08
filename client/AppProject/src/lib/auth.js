@@ -2,7 +2,8 @@ import axios from 'axios';
 
 
 const instance = axios.create({
-    baseURL: 'http://localhost:3001',
+    // baseURL: 'http://localhost:3001',
+    baseURL: "https://handlecity.herokuapp.com",
     timeout: 2000,
     withCredentials: true,
 });
@@ -17,7 +18,7 @@ export class AuthAPI {
 
     static currentUser() {
         return instance
-          .get("/api/auth/currentUser")
+          .get("/auth/currentUser")
           .then(res => res.data)
           .catch(err => console.log(err));
       }
@@ -31,7 +32,7 @@ export class AuthAPI {
     static login(username, password){
         return instance.post('/auth/logincit',{username, password})
         .then((res) => res.data)
-        .catch(AuthAPI.errorHandler)
+        // .catch(AuthAPI.errorHandler)
     }
 
     static signup(username, password, type, gender){

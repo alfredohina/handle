@@ -13,7 +13,7 @@ class _SignUp extends React.Component {
       username: "",
       password: "",
       type: "citizen",
-      gender: "",
+      gender: "male",
     };
   }
 
@@ -29,6 +29,7 @@ class _SignUp extends React.Component {
 
     AuthAPI.signup(username, password, type, gender)
         .then(user => {
+          console.log(user)
           if (user !== undefined || user !==null) {
             dispatch(login(user));
             navigation.navigate("SignedIn");

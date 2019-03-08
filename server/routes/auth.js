@@ -76,12 +76,11 @@ router.post("/signup", (req, res, next) => {
 });
 
 router.post("/image", uploadCloud.single("photo"), (req, res, next) => {
-  console.log('aA')
   const us = {}
   if (req.file) {
     us.image = req.file.url
 }
-  User.findByIdAndUpdate('5c5bf52c53e6a80a7df97337', us)
+  User.findByIdAndUpdate(req.user._id, us, {new: true})
     .then(() => res.json({OK:"OK"}))
     .catch(e => console.log("Error updating profile", e));
 });

@@ -26,7 +26,6 @@ export class _Profile extends React.Component {
 
   componentDidMount() {
     this.setState({ previmage: this.props.user.image })
-    console.log(this.props.user._id)
   }
 
 
@@ -38,25 +37,14 @@ export class _Profile extends React.Component {
     let { dispatch } = this.props;
     dispatch({ type: "IMG_UPLOAD", image: file })
   }
-
+  
   handleUpload = (e) => {
     e.preventDefault();
-    AuthAPI.upload(this.props.image).then(e => this.componentWillReceiveProps())
+    console.log(this.props.image)
+    AuthAPI.upload(this.props.image).then(() => 
+      this.setState({ previmage: this.props.user.image }))
+      // window.location.reload())
   };
-
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps)
-    // if(nextProps.user!==this.props.user){
-    //   //Perform some operation
-    //   this.setState({previmage: this.props.user.image });
-    //   this.classMethod();
-    // }
-  }
-
-  // handleUpdate = () => {
-  //   console.log(this.props.user.image)
-  //   this.setState({previmage: this.props.user.image})
-  // }
 
 
   handleFormSubmit = (event) => {
@@ -100,10 +88,8 @@ export class _Profile extends React.Component {
               <button className="button is-info" style={{color: "#fff", margin: "auto", display:"block", backgroundColor: "#4c71ae"}} type="submit" value="Submit">Edit profile</button>
 
 
-
             </form>
-
-              <img className="avatarImg" src={this.state.previmage} alt="avatar" width="60%" style={{ width: "20%" }} />
+              <img className="avatarImg" src={this.props.user.image} alt="avatar" width="60%" style={{ width: "20%" }} />
               <input type="file" onChange={(e) => this.handleImgChange(e)} name="name" />
               <button onClick={(e) => this.handleUpload(e)}>UPLOAD</button>
           </div>

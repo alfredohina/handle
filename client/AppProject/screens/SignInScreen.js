@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { View, Image } from "react-native";
-import { Button, Input, Text, withTheme } from "react-native-elements";
+import { Button, Input, Text } from "react-native-elements";
 import { AuthAPI } from "../src/lib/auth";
 import { login, errorMessageAction, clearMessages } from "../src/lib/redux/actions";
 
@@ -11,7 +11,8 @@ class _SignIn extends React.Component {
     super();
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      msg: ""
     };
   }
 
@@ -37,16 +38,25 @@ class _SignIn extends React.Component {
             dispatch(errorMessageAction("User not found"));
           }
         })
-        .catch(e => console.log(e));
+        .catch(() => this.alertLogin()
+         );
     }
   }
 
-  
+  alertLogin = () => {
+    this.setState(() => {
+      return { msg: true}
+  })
+    window.setTimeout(() => {
+      this.setState({ msg: false })
+  }, 3000)
+  }
+
   render() {
-    let { dispatch, navigation } = this.props;
-    let { messages } = this.props;
+    let { navigation } = this.props;
+    let { msg } = this.state;
     return (
-      <View style={{ paddingVertical: 90, flex: 1, backgroundColor: "#4c71ae" }}>
+      <View style={{ paddingVertical: 70, flex: 1, backgroundColor: "#4c71ae" }}>
 
         <Image style={{ alignSelf: "center" }} source={require('../public/images/world.png')} />
           <View style={{ paddingHorizontal: 30, paddingVertical: 30}}>
@@ -70,6 +80,24 @@ class _SignIn extends React.Component {
             />
           </View>
 
+
+          {/* {msg ? <Text style={{ marginTop:15, textAlign: "center", color: "tomato" }}></Text>
+          :
+          (<React.Fragment></React.Fragment>)} */}
+          
+
+          {msg ? (
+      
+      <View style={{backgroundColor: "tomato", marginLeft:30, marginRight: 30}}>
+      <Text style={{color: "white", textAlign:"center", marginTop: 5, marginBottom:5, fontSize: 16}}>
+        Username or password does not exist. Please, retry
+      </Text>
+      </View>
+      
+      ) : (<React.Fragment></React.Fragment>)}
+
+
+
           <Button
             buttonStyle={{ borderRadius: 100, marginTop: 20, width: "50%", alignSelf:"center", backgroundColor: "white" }}
             title="LOG IN"
@@ -84,12 +112,10 @@ class _SignIn extends React.Component {
             onPress={() => navigation.navigate("SignUp")}
             />
 
-          {messages.map(m => (
-          <Text key={m}>{m}</Text>
-        ))}
+          
       </View>
     );
   }
 }
 
-export const SignIn = connect(store => ({ messages: store.messages }))(_SignIn);
+export const SignIn = connect(store => ({ user: store.user }))(_SignIn);
